@@ -76,6 +76,11 @@ def compile_query(cat: Catalog, q: MetricQuery) -> tuple[str, list]:
     for d in list(q.group_by) + list(q.filters):
         if d not in m.dimensions:
             raise MetricError(f"метрика {m.id} не режется по {d}; можно: {', '.join(m.dimensions)}")
+    if len(set(q.group_by)) != len(q.group_by):
+        raise MetricError(f"group_by содержит повторы: {', '.join(q.group_by)}")
+    for d, values in q.filters.items():
+        if isinstance(values, list) and not values:
+            raise MetricError(f"фильтр по {d} пуст: укажите значения или уберите фильтр")
     params: list = [q.date_from, q.date_to]
     where = [f"{m.time_column} BETWEEN ? AND ?"]
     for d, values in q.filters.items():

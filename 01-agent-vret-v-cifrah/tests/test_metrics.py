@@ -87,3 +87,13 @@ def test_closed_through_matches_mart_months(db_path, con):
     nxt = date(last.year + (last.month == 12), last.month % 12 + 1, 1)
     last_day = date.fromordinal(nxt.toordinal() - 1)
     assert load_catalog(ROOT / "metrics.yaml").closed_through == last_day
+
+
+def test_empty_filter_list_rejected(cat):
+    with pytest.raises(MetricError, match="пуст"):
+        compile_query(cat, MetricQuery("revenue", date(2026, 1, 1), date(2026, 1, 31), filters={"region": []}))
+
+
+def test_duplicate_group_by_rejected(cat):
+    with pytest.raises(MetricError, match="повтор"):
+        compile_query(cat, MetricQuery("revenue", date(2026, 1, 1), date(2026, 1, 31), group_by=("region", "region")))
