@@ -58,3 +58,28 @@ def test_console_line_shows_stop(tmp_path, capsys):
     _copy_inputs(tmp_path)
     main(["eval", "--root", str(tmp_path), "--offline", "--limit", "1", "--variants", "B"])
     assert "final_answer" in capsys.readouterr().out.split("\n")[1]
+
+
+def test_results_written_as_they_arrive(tmp_path, monkeypatch):
+    import razbor01.offline as offline
+    _copy_inputs(tmp_path)
+    orig = offline.OracleClient._create
+    n = {"i": 0}
+
+    def flaky(self, **kw):
+        n["i"] += 1
+        if n["i"] == 3:
+            raise KeyboardInterrupt
+        return orig(self, **kw)
+    monkeypatch.setattr(offline.OracleClient, "_create", flaky)
+    with pytest.raises(KeyboardInterrupt):
+        main(["eval", "--root", str(tmp_path), "--offline", "--limit", "5", "--variants", "B"])
+    lines = (tmp_path / "eval" / "out" / "results.jsonl").read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 2
+
+
+def test_only_strips_spaces_and_rejects_unknown(tmp_path, capsys):
+    _copy_inputs(tmp_path)
+    assert main(["eval", "--root", str(tmp_path), "--offline", "--only", "Q07, Q19", "--variants", "B"]) == 0
+    assert main(["eval", "--root", str(tmp_path), "--offline", "--only", "Q07,Q99"]) != 0
+    assert "Q99" in capsys.readouterr().out

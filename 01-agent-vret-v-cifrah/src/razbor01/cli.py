@@ -11,7 +11,7 @@ from .golden import load_questions
 from .layers import prepare_db
 from .metrics import load_catalog
 from .report import render_report
-from .runner import run_eval, save_jsonl, summarize
+from .runner import append_jsonl, run_eval, save_jsonl, summarize
 from .tools import open_db
 
 
@@ -41,12 +41,18 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     questions = load_questions(root / "eval" / "questions.yaml")
     if args.only:
-        wanted = set(args.only.split(","))
+        wanted = {x.strip() for x in args.only.split(",") if x.strip()}
+        unknown = wanted - {q.id for q in questions}
+        if unknown:
+            print(f"нет вопросов: {', '.join(sorted(unknown))}")
+            return 2
         questions = [q for q in questions if q.id in wanted]
     if args.limit:
         questions = questions[: args.limit]
     model = DEFAULT_MODEL if args.offline else args.model  # офлайн токенов нет, цена нужна только для формы
     catalog = load_catalog(root / "metrics.yaml")
+    out = root / "eval" / "out"
+    (out / "results.jsonl").unlink(missing_ok=True)
     con = open_db(db)  # только чтение и без внешнего доступа
     try:
         if args.offline:
@@ -57,11 +63,10 @@ def main(argv: list[str] | None = None) -> int:
             client = anthropic.Anthropic()
         variants = tuple(v.strip() for v in args.variants.split(",") if v.strip())
         results = run_eval(con, catalog, questions, client, variants=variants, model=model,
-                           on_result=lambda r: print(f"{r.qid} {r.variant} {'OK ' if r.correct else 'ERR'} "
-                                                     f"{r.got} / {r.expected:.2f}  {r.seconds:.1f}s  {r.stop}"))
+                           on_result=lambda r: (append_jsonl(r, out / "results.jsonl"), print(f"{r.qid} {r.variant} {'OK ' if r.correct else 'ERR'} "
+                                                     f"{r.got} / {r.expected:.2f}  {r.seconds:.1f}s  {r.stop}")))
     finally:
         con.close()
-    out = root / "eval" / "out"
     summary = summarize(results)
     meta = {"модель": "офлайн-эталон" if args.offline else args.model, "вопросов": len(questions),
             "дата прогона": datetime.now().strftime("%Y-%m-%d %H:%M")}

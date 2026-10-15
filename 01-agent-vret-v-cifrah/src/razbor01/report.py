@@ -43,11 +43,14 @@ def _trap_note(r: QuestionResult) -> str:
 def render_report(results: list[QuestionResult], summary: dict, meta: dict) -> str:
     b = summary.get("B", {})
     passed = b.get("correct", 0) >= PASS_MIN_B
-    verdict = (f'<p class="verdict {"ok" if passed else "bad"}">Критерий «прошёл» (B ≥ {PASS_MIN_B}/30): '
-               f'{"да" if passed else "нет"}</p>')
+    errs = b.get("errors", 0)
+    answer = f"не определён (ошибок API: {errs})" if errs else ("да" if passed else "нет")
+    verdict = (f'<p class="verdict {"ok" if passed and not errs else "bad"}">Критерий «прошёл» (B ≥ {PASS_MIN_B}/30): '
+               f'{answer}</p>')
     head = "".join(f"<th>{v}</th>" for v in summary)
     rows = [
         ("Верных ответов", lambda s: f'{s["correct"]}/{s["n"]} ({s["accuracy_pct"]} %)'),
+        ("Ошибок API", lambda s: f'{s["errors"]}'),
         ("Цена за вопрос, $", lambda s: f'{s["cost_usd_per_q"]:.4f}'),
         ("Время на вопрос, с", lambda s: f'{s["seconds_per_q"]}'),
     ]

@@ -69,7 +69,7 @@ def run_agent(question: str, box: ToolBox, client, model: str = DEFAULT_MODEL,
                     run.trace.append(ToolCall("final_answer", args, ""))
                     try:
                         value = float(args["value"])
-                    except (KeyError, TypeError, ValueError):
+                    except (KeyError, TypeError, ValueError, OverflowError):
                         value = math.nan
                     if not math.isfinite(value):  # nan и inf — не ответ
                         run.stop = "bad_answer"

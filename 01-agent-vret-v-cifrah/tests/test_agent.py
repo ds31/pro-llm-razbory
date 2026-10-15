@@ -90,3 +90,12 @@ def test_nonfinite_value_is_bad_answer(box):
             content=[block], stop_reason="tool_use", usage=NS(input_tokens=1, output_tokens=1))))
         run = run_agent("q", box, client)
         assert run.stop == "bad_answer" and run.value is None
+
+
+def test_huge_int_is_bad_answer(box):
+    from types import SimpleNamespace as NS
+    from razbor01.agent import run_agent
+    block = NS(type="tool_use", id="t", name="final_answer", input={"value": 10**400, "unit": "", "explanation": ""})
+    client = NS(messages=NS(create=lambda **kw: NS(
+        content=[block], stop_reason="tool_use", usage=NS(input_tokens=1, output_tokens=1))))
+    assert run_agent("q", box, client).stop == "bad_answer"

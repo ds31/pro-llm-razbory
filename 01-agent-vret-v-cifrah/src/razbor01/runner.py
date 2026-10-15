@@ -15,6 +15,8 @@ from .tools import make_toolbox
 
 _PKG_ROOT = str(Path(__file__).resolve().parents[2])
 _HOME_RX = re.compile(r"(?:/home|/Users)/[^/\s'\"]+|/root\b")
+# путь вида /a/b: не после слова, скобки или «/», чтобы не задеть деление и URL
+_ABS_PATH_RX = re.compile(r"(?<![\w)\]/:.])/(?:[\w.\-]+/)+[\w.\-]*")
 
 
 def scrub(text: str) -> str:
@@ -23,7 +25,8 @@ def scrub(text: str) -> str:
     home = str(Path.home())
     if len(home) > 1:
         text = text.replace(home, "~")
-    return _HOME_RX.sub("~", text)
+    text = _HOME_RX.sub("~", text)
+    return _ABS_PATH_RX.sub("<path>", text)  # любой другой абсолютный путь, например --root в /tmp
 
 
 @dataclass
@@ -80,6 +83,7 @@ def summarize(results: list[QuestionResult]) -> dict:
         n = len(rs)
         out[v] = {
             "n": n,
+            "errors": sum(r.stop.startswith("error") for r in rs),
             "correct": sum(r.correct for r in rs),
             "accuracy_pct": round(100 * sum(r.correct for r in rs) / n, 1),
             "cost_usd_per_q": round(sum(r.cost_usd for r in rs) / n, 4),
@@ -88,6 +92,14 @@ def summarize(results: list[QuestionResult]) -> dict:
                         for t in TRAPS if any(r.trap == t for r in rs)},
         }
     return out
+
+
+def append_jsonl(r: QuestionResult, path: Path | str) -> None:
+    """Дописать один результат сразу: упавший или прерванный платный прогон не теряет сделанное."""
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8") as f:
+        f.write(scrub(json.dumps(asdict(r), ensure_ascii=False)) + "\n")
 
 
 def save_jsonl(results: list[QuestionResult], path: Path | str) -> Path:

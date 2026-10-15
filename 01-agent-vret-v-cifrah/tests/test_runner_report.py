@@ -108,3 +108,29 @@ def test_trap_hit_only_for_wrong_answers():
     ok = _fake(100.0)
     ok.correct = True
     assert "попал в ловушку" not in render_report([ok], summarize([ok]), {})
+
+
+def test_api_errors_make_verdict_undetermined(con):
+    class Boom:
+        messages = NS(create=lambda **kw: (_ for _ in ()).throw(RuntimeError("429")))
+    rs = run_eval(con, load_catalog(ROOT / "metrics.yaml"), QUESTIONS[:2], Boom(), variants=("B",))
+    s = summarize(rs)
+    assert s["B"]["errors"] == 2 and s["B"]["correct"] == 0
+    html = render_report(rs, s, {})
+    assert "не определён (ошибок API: 2)" in html
+
+
+def test_no_errors_means_zero(results):
+    assert summarize(results)["B"]["errors"] == 0
+
+
+def test_root_outside_home_does_not_leak(con, tmp_path):
+    leak = f"IO Error: Cannot open file {tmp_path}/data/retail.duckdb: locked"
+
+    class Leaky:
+        messages = NS(create=lambda **kw: (_ for _ in ()).throw(RuntimeError(leak)))
+    rs = run_eval(con, load_catalog(ROOT / "metrics.yaml"), QUESTIONS[:1], Leaky(), variants=("B",))
+    p = save_jsonl(rs, tmp_path / "r.jsonl")
+    html = render_report(rs, summarize(rs), {})
+    assert str(tmp_path) not in rs[0].stop and str(tmp_path) not in html
+    assert str(tmp_path) not in p.read_text(encoding="utf-8")
