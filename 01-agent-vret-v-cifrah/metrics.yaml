@@ -1,0 +1,96 @@
+# Слой метрик: одна правда для дашбордов и агента.
+# Метрика = таблица витрины + формула + разрешённые измерения + правило времени.
+# time_rule: range — сумма за период; period_end — значение на конец периода;
+#            period_avg — среднее из значений на конец каждого месяца периода.
+version: 1
+closed_through: '2026-09-30'   # последний закрытый день; более поздние периоды запрещены
+rules:
+  - id: R1
+    text: Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.
+  - id: R2
+    text: Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.
+  - id: R3
+    text: Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.
+  - id: R4
+    text: Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).
+  - id: R5
+    text: Доли, средние и цены пересчитываются из числителя и знаменателя, а не усредняются.
+dimensions:
+  store_id: {label: Номер магазина}
+  region: {label: Регион}
+  category: {label: Категория товара}
+  brand: {label: Бренд}
+  month: {label: Месяц (первое число)}
+metrics:
+  - id: revenue
+    label: Выручка, ₽
+    description: Чистая выручка — продажи минус возвраты, без строк-ошибок.
+    table: mart.sales_daily
+    time_column: sale_date
+    time_rule: range
+    expr: sum(net_amount)
+    dimensions: [store_id, region, category, brand, month]
+    synonyms: [выручка, оборот, продажи в рублях, чистые продажи]
+  - id: gross_sales
+    label: Валовые продажи, ₽
+    description: Продажи без вычета возвратов.
+    table: mart.sales_daily
+    time_column: sale_date
+    time_rule: range
+    expr: sum(net_amount + return_amount)
+    dimensions: [store_id, region, category, brand, month]
+    synonyms: [валовые продажи, продажи до возвратов]
+  - id: returns_amount
+    label: Возвраты, ₽
+    description: Сумма возвратов покупателей, положительным числом.
+    table: mart.sales_daily
+    time_column: sale_date
+    time_rule: range
+    expr: sum(return_amount)
+    dimensions: [store_id, region, category, brand, month]
+    synonyms: [возвраты, сумма возвратов]
+  - id: units
+    label: Продано, шт.
+    description: Чистое количество проданных единиц (возвраты вычтены).
+    table: mart.sales_daily
+    time_column: sale_date
+    time_rule: range
+    expr: sum(net_qty)
+    dimensions: [store_id, region, category, brand, month]
+    synonyms: [штуки, единицы, объём продаж в штуках]
+  - id: avg_unit_price
+    label: Средняя цена единицы, ₽
+    description: Чистая выручка ÷ чистое количество за период.
+    table: mart.sales_daily
+    time_column: sale_date
+    time_rule: range
+    expr: sum(net_amount) / nullif(sum(net_qty), 0)
+    dimensions: [store_id, region, category, brand, month]
+    synonyms: [средняя цена, цена за единицу]
+  - id: active_stores
+    label: Торговавших магазинов
+    description: Число магазинов с продажами в периоде.
+    table: mart.sales_daily
+    time_column: sale_date
+    time_rule: range
+    expr: count(DISTINCT store_id)
+    dimensions: [region, month]
+    synonyms: [число магазинов, сколько магазинов]
+  - id: stock_end_units
+    label: Остаток на конец периода, шт.
+    description: Остаток на последнюю дату конца месяца внутри периода.
+    table: mart.stock_month_end
+    time_column: month_end
+    time_rule: period_end
+    expr: sum(qty_on_hand)
+    dimensions: [store_id, region, category, brand]
+    synonyms: [остаток, остатки, запас]
+  - id: stock_avg_units
+    label: Средний остаток на конец месяца, шт.
+    description: Среднее из остатков на конец каждого месяца периода.
+    table: mart.stock_month_end
+    time_column: month_end
+    time_rule: period_avg
+    expr: sum(qty_on_hand)
+    dimensions: [store_id, region, category, brand]
+    synonyms: [средний остаток, средний запас]
