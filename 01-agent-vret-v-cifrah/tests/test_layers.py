@@ -19,7 +19,10 @@ def test_mart_revenue_equals_raw_with_rules(con):
     assert mart == raw
 
 
-def test_gross_minus_returns_is_net(con):
-    net, ret, gross = con.execute("""SELECT sum(net_amount), sum(return_amount), sum(net_amount + return_amount)
-                                     FROM mart.sales_daily""").fetchone()
-    assert ret > 0 and gross - ret == net
+def test_returns_match_raw_and_nonnegative(con):
+    mart_ret = con.execute("SELECT sum(return_amount) FROM mart.sales_daily").fetchone()[0]
+    raw_ret = con.execute("""SELECT -sum(r.amount) FROM raw.sales r
+                             JOIN mart.months m ON m.month = date_trunc('month', r.sale_date) AND m.is_closed
+                             WHERE r.qty < 0 AND abs(r.qty) < 1000""").fetchone()[0]
+    assert mart_ret > 0 and mart_ret == raw_ret
+    assert con.execute("SELECT count(*) FROM mart.sales_daily WHERE return_amount < 0").fetchone()[0] == 0

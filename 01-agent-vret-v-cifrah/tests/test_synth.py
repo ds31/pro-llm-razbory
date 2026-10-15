@@ -49,7 +49,16 @@ def test_generate_is_deterministic(tmp_path):
 
 
 def test_generate_overwrites_existing_file(tmp_path):
+    def counts(path):
+        c = duckdb.connect(str(path), read_only=True)
+        try:
+            return [c.execute(f"SELECT count(*) FROM raw.{t}").fetchone()[0]
+                    for t in ("products", "sales", "stock", "stores")]
+        finally:
+            c.close()
+
+    fresh = counts(generate(tmp_path / "fresh.duckdb"))
     p = tmp_path / "x.duckdb"
-    generate(p)
-    generate(p)  # не падает на существующей схеме raw
-    assert p.exists()
+    generate(p, seed=7)  # другое содержимое под тем же именем
+    generate(p)  # перезапись: не падает на существующей схеме raw
+    assert counts(p) == fresh
