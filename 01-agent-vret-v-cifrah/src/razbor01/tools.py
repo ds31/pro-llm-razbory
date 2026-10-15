@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import json
 from dataclasses import dataclass
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 from pathlib import Path
 
@@ -82,20 +82,33 @@ SPECS_B = [
 ]
 
 
+def _default(v):
+    if isinstance(v, Decimal):
+        return float(v)
+    if isinstance(v, (date, datetime)):
+        return v.isoformat()
+    raise TypeError(f"{type(v).__name__} не сериализуется в JSON")
+
+
 def _json(rows: list[dict]) -> str:
-    def conv(v):
-        if isinstance(v, Decimal):
-            return float(v)
-        if isinstance(v, date):
-            return v.isoformat()
-        return v
-    return json.dumps([{k: conv(v) for k, v in r.items()} for r in rows], ensure_ascii=False)
+    return json.dumps(rows, ensure_ascii=False, default=_default)
 
 
-def _rows(con: duckdb.DuckDBPyConnection, sql: str, params: list | None = None) -> list[dict]:
+def _rows(con: duckdb.DuckDBPyConnection, sql: str, params: list | None = None) -> tuple[list[dict], bool]:
+    """До MAX_ROWS строк и признак, что результат был длиннее."""
     cur = con.execute(sql, params or [])
     cols = [d[0] for d in cur.description]
-    return [dict(zip(cols, r)) for r in cur.fetchmany(MAX_ROWS)]
+    got = [dict(zip(cols, r)) for r in cur.fetchmany(MAX_ROWS + 1)]
+    return got[:MAX_ROWS], len(got) > MAX_ROWS
+
+
+TRUNC_HINT = f"показаны первые {MAX_ROWS} строк; агрегируйте в SQL"
+
+
+def _result(rows: list[dict], truncated: bool) -> str:
+    if not truncated:
+        return _json(rows)
+    return json.dumps({"rows": rows, "truncated": True, "hint": TRUNC_HINT}, ensure_ascii=False, default=_default)
 
 
 @dataclass
@@ -119,11 +132,11 @@ class ToolBox:
     # --- общий
     def _run_sql(self, sql: str) -> str:
         check_sql(self.con, sql, {"raw"} if self.variant == "A" else {"mart"})
-        return _json(_rows(self.con, sql))
+        return _result(*_rows(self.con, sql))
 
     # --- вариант A
     def _list_tables(self) -> str:
-        rows = _rows(self.con, "SELECT schema_name || '.' || table_name AS table, estimated_size AS rows "
+        rows, _ = _rows(self.con, "SELECT schema_name || '.' || table_name AS table, estimated_size AS rows "
                                "FROM duckdb_tables() WHERE schema_name = 'raw' ORDER BY 1")
         return _json(rows)
 
@@ -131,7 +144,7 @@ class ToolBox:
         schema, _, name = table.partition(".")
         if schema != "raw":
             raise ValueError("доступна только схема raw")
-        rows = _rows(self.con, "SELECT column_name, data_type FROM duckdb_columns() "
+        rows, _ = _rows(self.con, "SELECT column_name, data_type FROM duckdb_columns() "
                                "WHERE schema_name = ? AND table_name = ? ORDER BY column_index", [schema, name])
         if not rows:
             raise ValueError(f"нет таблицы {table}")
@@ -162,8 +175,12 @@ class ToolBox:
                         date_to=date.fromisoformat(date_to), group_by=tuple(group_by or ()),
                         filters=dict(filters or {}))
         sql, params = compile_query(self.catalog, q)
-        return json.dumps({"metric_id": metric_id, "sql": sql, "params": [str(p) for p in params],
-                           "rows": json.loads(_json(_rows(self.con, sql, params)))}, ensure_ascii=False)
+        rows, truncated = _rows(self.con, sql, params)
+        out = {"metric_id": metric_id, "sql": sql, "params": [str(p) for p in params], "rows": rows,
+               "truncated": truncated}
+        if truncated:
+            out["hint"] = TRUNC_HINT
+        return json.dumps(out, ensure_ascii=False, default=_default)
 
 
 def make_toolbox(variant: str, con: duckdb.DuckDBPyConnection, catalog: Catalog | None = None) -> ToolBox:

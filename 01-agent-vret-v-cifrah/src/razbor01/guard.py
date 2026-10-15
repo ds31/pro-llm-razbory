@@ -19,9 +19,12 @@ def check_sql(con: duckdb.DuckDBPyConnection, sql: str, allowed_schemas: set[str
         raise SqlRejected("разрешён только SELECT")
     try:
         tables = con.get_table_names(sql, qualified=True)
-    except duckdb.Error as e:
+    except duckdb.ParserException as e:
         raise SqlRejected(f"SQL не разобран: {e}") from e
-    bad = sorted(t for t in tables if t.split(".")[0] not in allowed_schemas or "." not in t)
+    except duckdb.Error as e:
+        raise SqlRejected(f"запрос отклонён: {str(e).splitlines()[0]}") from e
+    allowed_schemas = {s.lower() for s in allowed_schemas}
+    bad = sorted(t for t in tables if "." not in t or t.split(".")[0].strip('"').lower() not in allowed_schemas)
     if bad:
         allowed = ", ".join(f"{s}.*" for s in sorted(allowed_schemas))
         raise SqlRejected(f"таблицы {', '.join(bad)} недоступны; пишите имя со схемой, доступно: {allowed}")

@@ -79,6 +79,8 @@ def compile_query(cat: Catalog, q: MetricQuery) -> tuple[str, list]:
     if len(set(q.group_by)) != len(q.group_by):
         raise MetricError(f"group_by содержит повторы: {', '.join(q.group_by)}")
     for d, values in q.filters.items():
+        if values is None or (isinstance(values, list) and (None in values)):
+            raise MetricError(f"фильтр по {d} содержит null: укажите значения или уберите фильтр")
         if isinstance(values, list) and not values:
             raise MetricError(f"фильтр по {d} пуст: укажите значения или уберите фильтр")
     params: list = [q.date_from, q.date_to]

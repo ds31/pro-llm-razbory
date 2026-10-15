@@ -79,3 +79,24 @@ def test_agent_cannot_read_files(db_path, tmp_path, variant, sql):
         assert err and "sk-secret-123" not in out
     finally:
         c.close()
+
+
+def test_truncation_is_explicit(box_a):
+    out, err = box_a.call("run_sql", {"sql": "SELECT sale_date, sum(amount) AS s FROM raw.sales GROUP BY 1"})
+    data = json.loads(out)
+    assert not err and data["truncated"] is True and len(data["rows"]) == 50 and "агрегируйте" in data["hint"]
+    out, _ = box_a.call("run_sql", {"sql": "SELECT * FROM raw.stores"})
+    assert isinstance(json.loads(out), list)
+
+
+def test_query_metric_truncated_flag(box_b):
+    base = {"metric_id": "revenue", "date_from": "2026-01-01", "date_to": "2026-09-30"}
+    small = json.loads(box_b.call("query_metric", base)[0])
+    assert small["truncated"] is False
+    big = json.loads(box_b.call("query_metric", {**base, "group_by": ["store_id", "month"]})[0])
+    assert big["truncated"] is True and len(big["rows"]) == 50
+
+
+def test_nested_decimal_serializes(box_a):
+    out, err = box_a.call("run_sql", {"sql": "SELECT list(amount) AS xs FROM (SELECT amount FROM raw.sales LIMIT 3)"})
+    assert not err and len(json.loads(out)[0]["xs"]) == 3

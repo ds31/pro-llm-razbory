@@ -97,3 +97,9 @@ def test_empty_filter_list_rejected(cat):
 def test_duplicate_group_by_rejected(cat):
     with pytest.raises(MetricError, match="повтор"):
         compile_query(cat, MetricQuery("revenue", date(2026, 1, 1), date(2026, 1, 31), group_by=("region", "region")))
+
+
+def test_null_filter_rejected(cat):
+    for bad in (None, [None]):
+        with pytest.raises(MetricError, match="null"):
+            compile_query(cat, MetricQuery("revenue", date(2026, 1, 1), date(2026, 1, 31), filters={"region": bad}))
