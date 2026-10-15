@@ -1,0 +1,10 @@
+.env
+.env.*
+__pycache__/
+*.pyc
+.venv/
+*.duckdb
+*.duckdb.wal
+eval/out/
+**/eval/out/
+.DS_Store
