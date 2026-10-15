@@ -79,3 +79,14 @@ def test_max_turns(box):
     script = [reply([tool_use(f"t{i}", "list_tables", {})]) for i in range(3)]
     run = run_agent("q", box, FakeClient(script), max_turns=3)
     assert run.stop == "max_turns" and len(run.trace) == 3
+
+
+def test_nonfinite_value_is_bad_answer(box):
+    from types import SimpleNamespace as NS
+    from razbor01.agent import run_agent
+    for bad in (float("nan"), float("inf"), float("-inf")):
+        block = NS(type="tool_use", id="t", name="final_answer", input={"value": bad, "unit": "", "explanation": ""})
+        client = NS(messages=NS(create=lambda **kw: NS(
+            content=[block], stop_reason="tool_use", usage=NS(input_tokens=1, output_tokens=1))))
+        run = run_agent("q", box, client)
+        assert run.stop == "bad_answer" and run.value is None

@@ -1,6 +1,7 @@
 """Цикл агента на Claude API: ручной цикл tool use, чтобы писать полную трассу и считать токены."""
 from __future__ import annotations
 
+import math
 import time
 from dataclasses import dataclass, field
 
@@ -67,10 +68,13 @@ def run_agent(question: str, box: ToolBox, client, model: str = DEFAULT_MODEL,
                 if u.name == "final_answer":
                     run.trace.append(ToolCall("final_answer", args, ""))
                     try:
-                        run.value = float(args["value"])
+                        value = float(args["value"])
                     except (KeyError, TypeError, ValueError):
+                        value = math.nan
+                    if not math.isfinite(value):  # nan и inf — не ответ
                         run.stop = "bad_answer"
                         return run
+                    run.value = value
                     run.unit = str(args.get("unit", ""))
                     run.explanation = str(args.get("explanation", ""))
                     run.metric_id = args.get("metric_id")
@@ -81,6 +85,9 @@ def run_agent(question: str, box: ToolBox, client, model: str = DEFAULT_MODEL,
                 results.append({"type": "tool_result", "tool_use_id": u.id, "content": out, "is_error": err})
             messages.append({"role": "user", "content": results})
         run.stop = "max_turns"
+        return run
+    except Exception as e:  # сбой API: оставляем известную трассу и токены, ошибку видно в stop
+        run.stop = f"error: {type(e).__name__}: {e}"
         return run
     finally:
         run.seconds = clock() - t0
