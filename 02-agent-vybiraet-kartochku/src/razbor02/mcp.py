@@ -316,6 +316,14 @@ def summarize(responses: dict, source: str, note: str, captured: str) -> dict:
     }
 
 
+def load_fixtures(fixtures_dir: Path | str) -> dict:
+    return {k: json.loads((Path(fixtures_dir) / f"{k}.json").read_text(encoding="utf-8")) for k in requests_plan()}
+
+
+def fixtures_date(fixtures_dir: Path | str) -> str:
+    return json.loads((Path(fixtures_dir) / "meta.json").read_text(encoding="utf-8"))["captured"]
+
+
 def run_probe(out_dir: Path | str, fixtures_dir: Path | str, *, offline: bool = False, timeout: float = 30,
               post=post) -> dict:
     out_dir, fixtures_dir = Path(out_dir), Path(fixtures_dir)
@@ -326,7 +334,10 @@ def run_probe(out_dir: Path | str, fixtures_dir: Path | str, *, offline: bool = 
         try:
             for i, (key, (method, params)) in enumerate(requests_plan().items(), start=1):
                 headers, body = build_request(method, params, id=i)
-                resp = post(headers, body, timeout=timeout)
+                try:
+                    resp = post(headers, body, timeout=timeout)
+                except OSError:  # разовый сбой сети или таймаут — один повтор
+                    resp = post(headers, body, timeout=timeout)
                 parse_tools(resp) if key == "tools" else parse_search(resp)
                 responses[key] = resp if key == "tools" else anonymize_response(resp)
             source, captured = "live", date.today().isoformat()
@@ -334,8 +345,7 @@ def run_probe(out_dir: Path | str, fixtures_dir: Path | str, *, offline: bool = 
             responses = {}
             note = f"живой Shop MCP недоступен ({e}); взят снимок eval/fixtures"
     if not responses:
-        responses = {k: json.loads((fixtures_dir / f"{k}.json").read_text(encoding="utf-8")) for k in requests_plan()}
-        captured = json.loads((fixtures_dir / "meta.json").read_text(encoding="utf-8"))["captured"]
+        responses, captured = load_fixtures(fixtures_dir), fixtures_date(fixtures_dir)
     for key, resp in responses.items():
         (out_dir / f"{key}.json").write_text(json.dumps(resp, ensure_ascii=False, indent=1), encoding="utf-8")
     summary = summarize(responses, source, note, captured)

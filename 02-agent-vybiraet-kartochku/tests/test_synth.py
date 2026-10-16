@@ -50,4 +50,11 @@ def test_gtin_checksum():
 def test_committed_csv_matches_generator():
     cards, erp = make_catalog(SEED)
     assert (ROOT / "data" / "catalog.csv").read_text(encoding="utf-8") == to_csv(cards)
-    assert (ROOT / "data" / "catalog_1c.csv").read_text(encoding="utf-8") == to_csv(erp)
+    assert (ROOT / "data" / "catalog_erp.csv").read_text(encoding="utf-8") == to_csv(erp)
+
+
+def test_titles_have_no_repeated_words():
+    _, erp = make_catalog(SEED)
+    for r in erp:
+        words = r["title"].lower().split()
+        assert len(words) == len(set(words)), r["title"]

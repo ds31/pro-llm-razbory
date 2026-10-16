@@ -203,6 +203,18 @@ def test_run_probe_falls_back_without_network(tmp_path):
     assert s["source"] == "fixtures" and "нет сети" in s["note"]
 
 
+def test_run_probe_retries_once_on_transient_error(tmp_path):
+    calls = {"n": 0}
+
+    def flaky(headers, body, timeout=30, url=mcp.ENDPOINT):
+        calls["n"] += 1
+        if calls["n"] == 2:
+            raise TimeoutError("timed out")
+        return _fake_post(headers, body)
+    s = mcp.run_probe(tmp_path, FIXTURES, post=flaky)
+    assert s["source"] == "live" and calls["n"] == 5
+
+
 def _online():
     try:
         socket.create_connection(("mcp.shop.com", 443), timeout=3).close()
@@ -215,5 +227,6 @@ def _online():
 @pytest.mark.skipif(not _online(), reason="нет сети до mcp.shop.com")
 def test_live_shop_mcp(tmp_path):
     s = mcp.run_probe(tmp_path, FIXTURES)
-    assert s["source"] == "live" and s["tools"] >= 10 and "search_catalog" in s["tool_names"]
+    assert s["source"] == "live", s["note"]
+    assert s["tools"] >= 10 and "search_catalog" in s["tool_names"]
     assert s["products"] > 0

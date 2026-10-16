@@ -1,0 +1,614 @@
+{
+  "package": "02-agent-vybiraet-kartochku",
+  "article": "https://pro-llm.ru/blog/agent-pokupaet-v-chate-kogo-vyberet.html",
+  "note": "audit — data/catalog.csv против data/catalog_erp.csv; shop_mcp_snapshot — eval/fixtures (17.10.2026)",
+  "audit": {
+    "cards": 60,
+    "readiness": {
+      "mean": 77.5,
+      "median": 77.0,
+      "ready_80plus": 22,
+      "below_60": 4,
+      "rules_failed": [
+        {
+          "rule": "description",
+          "label": "Описание",
+          "cards": 44
+        },
+        {
+          "rule": "tech_specs",
+          "label": "Характеристики",
+          "cards": 26
+        },
+        {
+          "rule": "image_alt",
+          "label": "Подпись фото (alt)",
+          "cards": 16
+        },
+        {
+          "rule": "rating_count",
+          "label": "Рейтинг с числом отзывов",
+          "cards": 15
+        },
+        {
+          "rule": "ships_to",
+          "label": "Страны доставки",
+          "cards": 13
+        },
+        {
+          "rule": "target_gender",
+          "label": "Пол",
+          "cards": 13
+        },
+        {
+          "rule": "availability",
+          "label": "Наличие",
+          "cards": 12
+        },
+        {
+          "rule": "gtin",
+          "label": "GTIN (штрихкод)",
+          "cards": 12
+        },
+        {
+          "rule": "delivery_days",
+          "label": "Срок доставки",
+          "cards": 11
+        },
+        {
+          "rule": "size",
+          "label": "Размер",
+          "cards": 11
+        },
+        {
+          "rule": "color",
+          "label": "Цвет",
+          "cards": 5
+        },
+        {
+          "rule": "price_currency",
+          "label": "Цена с валютой",
+          "cards": 5
+        }
+      ]
+    },
+    "scenarios": [
+      {
+        "id": "S1",
+        "title": "Мужские непромокаемые кроссовки 42 размера до 8000 ₽, в наличии и с доставкой в страну покупателя, рейтинг от 4 при 20+ отзывах",
+        "tool": "search_catalog",
+        "pool": 10,
+        "visible": 3,
+        "visible_pct": 30.0,
+        "funnel": [
+          {
+            "step": "attr:Target gender",
+            "label": "Пол = Мужской (Target gender)",
+            "cut": 3
+          },
+          {
+            "step": "attr:Size",
+            "label": "Размер = 42 (Size)",
+            "cut": 1
+          },
+          {
+            "step": "price",
+            "label": "Цена до 8 000 ₽",
+            "cut": 2
+          },
+          {
+            "step": "ships_to",
+            "label": "Доставка в страну покупателя (RU)",
+            "cut": 0
+          },
+          {
+            "step": "available",
+            "label": "В наличии (available)",
+            "cut": 1
+          },
+          {
+            "step": "rating",
+            "label": "Рейтинг от 4 при 20+ отзывах",
+            "cut": 0
+          },
+          {
+            "step": "verify",
+            "label": "Проверка по тексту: «мужские непромокаемые кроссовки»",
+            "cut": 0
+          }
+        ],
+        "cut_independent": {
+          "attr:Target gender": 3,
+          "attr:Size": 2,
+          "price": 2,
+          "ships_to": 3,
+          "available": 2,
+          "rating": 2,
+          "verify": 0
+        },
+        "fixable": {
+          "1": 3,
+          "2": 1,
+          "3+": 3
+        }
+      },
+      {
+        "id": "S2",
+        "title": "Чёрная женская пуховая куртка размера M до 12 000 ₽, в наличии и с доставкой в страну покупателя",
+        "tool": "search_catalog",
+        "pool": 6,
+        "visible": 0,
+        "visible_pct": 0.0,
+        "funnel": [
+          {
+            "step": "attr:Target gender",
+            "label": "Пол = Женский (Target gender)",
+            "cut": 4
+          },
+          {
+            "step": "attr:Size",
+            "label": "Размер = M (Size)",
+            "cut": 1
+          },
+          {
+            "step": "attr:Color",
+            "label": "Цвет = Черный (Color)",
+            "cut": 1
+          },
+          {
+            "step": "price",
+            "label": "Цена до 12 000 ₽",
+            "cut": 0
+          },
+          {
+            "step": "ships_to",
+            "label": "Доставка в страну покупателя (RU)",
+            "cut": 0
+          },
+          {
+            "step": "available",
+            "label": "В наличии (available)",
+            "cut": 0
+          },
+          {
+            "step": "verify",
+            "label": "Проверка по тексту: «женская пуховая куртка чёрная»",
+            "cut": 0
+          }
+        ],
+        "cut_independent": {
+          "attr:Target gender": 4,
+          "attr:Size": 1,
+          "attr:Color": 1,
+          "price": 1,
+          "ships_to": 1,
+          "available": 3,
+          "verify": 2
+        },
+        "fixable": {
+          "1": 0,
+          "2": 5,
+          "3+": 1
+        }
+      },
+      {
+        "id": "S3",
+        "title": "Мужская флисовая толстовка размера L до 4000 ₽ — покупатель в другой стране (BY)",
+        "tool": "search_catalog",
+        "pool": 3,
+        "visible": 1,
+        "visible_pct": 33.3,
+        "funnel": [
+          {
+            "step": "attr:Target gender",
+            "label": "Пол = Мужской (Target gender)",
+            "cut": 0
+          },
+          {
+            "step": "attr:Size",
+            "label": "Размер = L (Size)",
+            "cut": 0
+          },
+          {
+            "step": "price",
+            "label": "Цена до 4 000 ₽",
+            "cut": 0
+          },
+          {
+            "step": "ships_to",
+            "label": "Доставка в страну покупателя (BY)",
+            "cut": 2
+          },
+          {
+            "step": "available",
+            "label": "В наличии (available)",
+            "cut": 0
+          },
+          {
+            "step": "verify",
+            "label": "Проверка по тексту: «мужская флисовая толстовка»",
+            "cut": 0
+          }
+        ],
+        "cut_independent": {
+          "attr:Target gender": 0,
+          "attr:Size": 0,
+          "price": 0,
+          "ships_to": 2,
+          "available": 0,
+          "verify": 0
+        },
+        "fixable": {
+          "1": 2,
+          "2": 0,
+          "3+": 0
+        }
+      },
+      {
+        "id": "S4",
+        "title": "Серое сатиновое постельное бельё, 2-спальное, до 6000 ₽, рейтинг от 4,5 при 20+ отзывах",
+        "tool": "search_catalog",
+        "pool": 5,
+        "visible": 3,
+        "visible_pct": 60.0,
+        "funnel": [
+          {
+            "step": "attr:Size",
+            "label": "Размер = 2-спальный (Size)",
+            "cut": 1
+          },
+          {
+            "step": "attr:Color",
+            "label": "Цвет = Серый (Color)",
+            "cut": 0
+          },
+          {
+            "step": "price",
+            "label": "Цена до 6 000 ₽",
+            "cut": 0
+          },
+          {
+            "step": "ships_to",
+            "label": "Доставка в страну покупателя (RU)",
+            "cut": 0
+          },
+          {
+            "step": "available",
+            "label": "В наличии (available)",
+            "cut": 0
+          },
+          {
+            "step": "rating",
+            "label": "Рейтинг от 4.5 при 20+ отзывах",
+            "cut": 1
+          },
+          {
+            "step": "verify",
+            "label": "Проверка по тексту: «постельное бельё сатин 2-спальное серое»",
+            "cut": 0
+          }
+        ],
+        "cut_independent": {
+          "attr:Size": 1,
+          "attr:Color": 0,
+          "price": 0,
+          "ships_to": 0,
+          "available": 0,
+          "rating": 1,
+          "verify": 0
+        },
+        "fixable": {
+          "1": 2,
+          "2": 0,
+          "3+": 0
+        }
+      },
+      {
+        "id": "S5",
+        "title": "Покупатель прислал штрихкод с упаковки: «есть точно такой же, с доставкой ко мне?»",
+        "tool": "lookup_catalog",
+        "pool": 56,
+        "visible": 26,
+        "visible_pct": 46.4,
+        "funnel": [
+          {
+            "step": "lookup",
+            "label": "Поиск по штрихкоду (lookup_catalog)",
+            "cut": 12
+          },
+          {
+            "step": "ships_to",
+            "label": "Доставка в страну покупателя (RU)",
+            "cut": 10
+          },
+          {
+            "step": "available",
+            "label": "В наличии (available)",
+            "cut": 8
+          }
+        ],
+        "cut_independent": {
+          "lookup": 12,
+          "ships_to": 13,
+          "available": 12
+        },
+        "fixable": {
+          "1": 23,
+          "2": 7,
+          "3+": 0
+        }
+      }
+    ],
+    "pool_total": 80,
+    "visible_total": 33,
+    "top_blockers": [
+      {
+        "field": "ships_to",
+        "label": "Страны доставки",
+        "hits": 19
+      },
+      {
+        "field": "available",
+        "label": "Наличие",
+        "hits": 17
+      },
+      {
+        "field": "gtin",
+        "label": "GTIN",
+        "hits": 12
+      },
+      {
+        "field": "target_gender",
+        "label": "Пол",
+        "hits": 7
+      },
+      {
+        "field": "sizes",
+        "label": "Размер",
+        "hits": 4
+      }
+    ],
+    "lost_cards": 35,
+    "fixable": {
+      "1": 19,
+      "2": 10,
+      "3+": 6
+    },
+    "fixable_1_2": 29
+  },
+  "shop_mcp_snapshot": {
+    "captured": "2026-10-17",
+    "endpoint": "https://mcp.shop.com/",
+    "protocol": "2026-07-28",
+    "tools": 17,
+    "tool_names": [
+      "create_checkout",
+      "get_checkout",
+      "update_checkout",
+      "complete_checkout",
+      "create_cart",
+      "get_cart",
+      "update_cart",
+      "search_catalog",
+      "lookup_catalog",
+      "get_product",
+      "search_orders",
+      "get_account",
+      "create_spend_request",
+      "get_spend_request",
+      "update_spend_request",
+      "cancel_spend_request",
+      "complete_spend_request"
+    ],
+    "read_only": [
+      "get_checkout",
+      "get_cart",
+      "search_catalog",
+      "lookup_catalog",
+      "get_product",
+      "search_orders",
+      "get_account"
+    ],
+    "attribute_filters": [
+      "Color",
+      "Size",
+      "Target gender"
+    ],
+    "search_filters": [
+      "categories",
+      "price",
+      "available",
+      "condition",
+      "ships_from",
+      "ships_to",
+      "shops",
+      "attributes",
+      "price_tier",
+      "rating"
+    ],
+    "query": "waterproof winter running shoes",
+    "ucp_version": "2026-08-25",
+    "products": 10,
+    "card_fields": [
+      {
+        "field": "id",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "title",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "description",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "handle",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "media",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "options",
+        "present": 7,
+        "of": 10
+      },
+      {
+        "field": "metadata",
+        "present": 6,
+        "of": 10
+      },
+      {
+        "field": "variants",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "price_range",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "metadata.unique_selling_points",
+        "present": 6,
+        "of": 10
+      },
+      {
+        "field": "metadata.top_features",
+        "present": 6,
+        "of": 10
+      },
+      {
+        "field": "metadata.tech_specs",
+        "present": 6,
+        "of": 10
+      },
+      {
+        "field": "options[Color]",
+        "present": 5,
+        "of": 10
+      },
+      {
+        "field": "options[Numeric shoe size]",
+        "present": 3,
+        "of": 10
+      },
+      {
+        "field": "media[].alt_text",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].id",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].title",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].description",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].handle",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].url",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].price",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].availability",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].options",
+        "present": 7,
+        "of": 10
+      },
+      {
+        "field": "variants[].media",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].seller",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].checkout_url",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "variants[].rating",
+        "present": 5,
+        "of": 10
+      },
+      {
+        "field": "variants[].condition",
+        "present": 10,
+        "of": 10
+      },
+      {
+        "field": "rating",
+        "present": 4,
+        "of": 10
+      },
+      {
+        "field": "options[Shoe size]",
+        "present": 2,
+        "of": 10
+      },
+      {
+        "field": "options[Size]",
+        "present": 3,
+        "of": 10
+      },
+      {
+        "field": "options[Shoe fit]",
+        "present": 2,
+        "of": 10
+      }
+    ],
+    "rating_filter": {
+      "rating": {
+        "variant": {
+          "min": 4,
+          "min_count": 20
+        }
+      }
+    },
+    "filter_effect": {
+      "base": 50,
+      "base_meeting": 1,
+      "base_dropped": 49,
+      "filtered": 50,
+      "filtered_meeting": 50,
+      "overlap": 1,
+      "replaced": 49,
+      "min": 4,
+      "min_count": 20
+    }
+  }
+}

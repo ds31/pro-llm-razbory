@@ -93,7 +93,7 @@ def scenario_steps(s: dict) -> list[tuple[str, str, list[str]]]:
     if "price" in f:
         steps.append(("price", f"Цена до {f['price']['max']:,} ₽".replace(",", " "), ["price", "currency"]))
     if "ships_to" in f:
-        steps.append(("ships_to", f"Доставка в {f['ships_to']['country']} (ships_to)", ["ships_to"]))
+        steps.append(("ships_to", f"Доставка в страну покупателя ({f['ships_to']['country']})", ["ships_to"]))
     if f.get("available"):
         steps.append(("available", "В наличии (available)", ["available"]))
     if "rating" in f:
@@ -140,7 +140,7 @@ def in_pool(s: dict, erp_row: dict) -> bool:
 
 
 def blame(step: str, s: dict, card: dict, erp_row: dict | None) -> list[str]:
-    """Поля карточки, из-за которых шаг не пройден: отличаются от 1С, а без 1С — пустые."""
+    """Поля карточки, из-за которых шаг не пройден: отличаются от учётной системы, а без неё — пустые."""
     fields = next(fs for st, _, fs in scenario_steps(s) if st == step)
     if erp_row is None:
         return [c for c in fields if not card.get(c, "").strip()]

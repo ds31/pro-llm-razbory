@@ -1,15 +1,16 @@
 # Пять покупателей, которые пришли через AI-ассистента.
 # filters — жёсткие фильтры агента в форме search_catalog / lookup_catalog Shop MCP:
 #   attributes (Color, Size, Target gender), price.max (в рублях, валюта обязательна), ships_to.country,
-#   available, rating.variant {min, min_count}.
+#   available, rating.variant {min, min_count}. Страна покупателя в сценариях — код ISO (RU, BY);
+#   важен не код, а то, что у карточки вообще заполнен список стран доставки.
 # must_mention — то, что не влезло в фильтры: агент проверяет это по названию, описанию и характеристикам
 #   («Keep hard requirements in supported filters; preserve and verify the rest» — подсказка Shop MCP агенту).
-# pool — где искать товар в учётной системе. Подходящие товары («пул») определяются по catalog_1c.csv:
+# pool — где искать товар в учётной системе. Подходящие товары («пул») определяются по catalog_erp.csv:
 #   это товары, которые покупателю реально подходят. Агент видит только catalog.csv.
 
 scenarios:
   - id: S1
-    title: "Мужские непромокаемые кроссовки 42 размера до 8000 ₽ с доставкой в РФ, рейтинг от 4 при 20+ отзывах"
+    title: "Мужские непромокаемые кроссовки 42 размера до 8000 ₽, в наличии и с доставкой в страну покупателя, рейтинг от 4 при 20+ отзывах"
     tool: search_catalog
     query: "мужские непромокаемые кроссовки"
     pool: {category: Обувь, product_type: Кроссовки}
@@ -24,7 +25,7 @@ scenarios:
       rating: {variant: {min: 4.0, min_count: 20}}
 
   - id: S2
-    title: "Чёрная женская пуховая куртка размера M до 12 000 ₽ с доставкой в РФ"
+    title: "Чёрная женская пуховая куртка размера M до 12 000 ₽, в наличии и с доставкой в страну покупателя"
     tool: search_catalog
     query: "женская пуховая куртка чёрная"
     pool: {category: Одежда, product_type: Куртка}
@@ -39,7 +40,7 @@ scenarios:
       available: true
 
   - id: S3
-    title: "Мужская флисовая толстовка размера L до 4000 ₽ с доставкой в Беларусь"
+    title: "Мужская флисовая толстовка размера L до 4000 ₽ — покупатель в другой стране (BY)"
     tool: search_catalog
     query: "мужская флисовая толстовка"
     pool: {category: Одежда, product_type: Толстовка}
@@ -68,7 +69,7 @@ scenarios:
       rating: {variant: {min: 4.5, min_count: 20}}
 
   - id: S5
-    title: "Покупатель прислал штрихкод с упаковки: «есть такой же, с доставкой в РФ?»"
+    title: "Покупатель прислал штрихкод с упаковки: «есть точно такой же, с доставкой ко мне?»"
     tool: lookup_catalog
     query: "поиск по GTIN"
     pool: {}

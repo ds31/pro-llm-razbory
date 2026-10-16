@@ -138,7 +138,7 @@ def test_blame_names_fields_that_differ_from_erp():
     c = card(currency="", rating_count="")
     assert blame("price", SCEN["S1"], c, FULL) == ["currency"]
     assert blame("rating", SCEN["S1"], c, FULL) == ["rating_count"]
-    assert blame("price", SCEN["S1"], c, None) == ["currency"]  # без 1С — пустые поля шага
+    assert blame("price", SCEN["S1"], c, None) == ["currency"]  # без учётной системы — пустые поля шага
 
 
 # --- на синтетическом каталоге ---------------------------------------------
