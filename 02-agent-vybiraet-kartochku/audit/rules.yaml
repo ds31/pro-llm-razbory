@@ -1,0 +1,120 @@
+# Правила готовности карточки для AI-агента.
+# Каждое правило — отражение поля или жёсткого фильтра Shop MCP (search_catalog / lookup_catalog / checkout).
+# Вес — вклад в балл готовности 0–100; правило, которое не относится к категории, из знаменателя выпадает.
+# check: filled — поле не пустое; gtin — EAN-13 с верной контрольной цифрой; one_of — значение из списка;
+#        price_currency — цена > 0 и код валюты ISO 4217; rating_count — рейтинг есть и отзывов не меньше порога;
+#        min_items — не меньше N пунктов «ключ: значение» через «;»; min_len — текст не короче N символов.
+
+min_review_count: 20
+
+rules:
+  - id: size
+    field: sizes
+    check: filled
+    weight: 12
+    applies_to: [Обувь, Одежда, Дом]
+    label: Размер
+    shop_mcp: "search_catalog → filters.attributes[name=Size]"
+    why: "Размер — жёсткий фильтр агента. Пустое поле = товар не проходит запрос «42 размера», даже если размер есть на складе."
+
+  - id: availability
+    field: available
+    check: one_of
+    values: ["true", "false"]
+    weight: 12
+    applies_to: [Обувь, Одежда, Дом]
+    label: Наличие
+    shop_mcp: "search_catalog → filters.available (по умолчанию true: только в наличии); variants[].availability.available"
+    why: "По умолчанию агент ищет только то, что можно купить сейчас. Неизвестное наличие — не «в наличии»."
+
+  - id: color
+    field: color
+    check: filled
+    weight: 10
+    applies_to: [Обувь, Одежда, Дом]
+    label: Цвет
+    shop_mcp: "search_catalog → filters.attributes[name=Color]"
+    why: "Цвет — один из трёх атрибутов, по которым Shop MCP фильтрует жёстко (Color, Size, Target gender)."
+
+  - id: target_gender
+    field: target_gender
+    check: filled
+    weight: 10
+    applies_to: [Обувь, Одежда]
+    label: Пол
+    shop_mcp: "search_catalog → filters.attributes[name=Target gender]"
+    why: "«Мужские», «женские» агент передаёт фильтром, а не словом в запросе. Без поля товар выпадает."
+
+  - id: price_currency
+    field: [price, currency]
+    check: price_currency
+    weight: 10
+    applies_to: [Обувь, Одежда, Дом]
+    label: Цена с валютой
+    shop_mcp: "search_catalog → filters.price (границы в минорных единицах context.currency); variants[].price {amount, currency}"
+    why: "Фильтр «до 8000 ₽» сравнивает суммы в одной валюте. Цена без валюты не сравнима — карточка отсекается."
+
+  - id: rating_count
+    field: [rating, rating_count]
+    check: rating_count
+    weight: 10
+    applies_to: [Обувь, Одежда, Дом]
+    label: Рейтинг с числом отзывов
+    shop_mcp: "search_catalog → filters.rating.variant.min, min_count; variants[].rating {value, count}"
+    why: "Фильтр «рейтинг от 4 при 20+ отзывах» смотрит на число отзывов. Звёзды без счётчика его не проходят."
+
+  - id: ships_to
+    field: ships_to
+    check: filled
+    weight: 10
+    applies_to: [Обувь, Одежда, Дом]
+    label: Страны доставки
+    shop_mcp: "search_catalog → filters.ships_to.country (ISO 3166-1 alpha-2)"
+    why: "Страна доставки — жёсткий фильтр. Нет списка стран — агент не может доказать, что товар доедет."
+
+  - id: gtin
+    field: gtin
+    check: gtin
+    weight: 8
+    applies_to: [Обувь, Одежда, Дом]
+    label: GTIN (штрихкод)
+    shop_mcp: "lookup_catalog → ids (GTIN, UPC, ID, URL)"
+    why: "По штрихкоду агент находит «точно такой же» товар. Пустой или битый GTIN — товар не находится."
+
+  - id: tech_specs
+    field: tech_specs
+    check: min_items
+    min: 3
+    weight: 8
+    applies_to: [Обувь, Одежда, Дом]
+    label: Характеристики
+    shop_mcp: "products[].metadata.tech_specs, top_features"
+    why: "Всё, что не влезло в фильтры («непромокаемые», «пух», «сатин»), агент проверяет по характеристикам."
+
+  - id: delivery_days
+    field: delivery_days
+    check: filled
+    weight: 4
+    applies_to: [Обувь, Одежда, Дом]
+    label: Срок доставки
+    shop_mcp: "create_checkout → fulfillment.methods (способ и срок доставки)"
+    why: "Срок доставки агент показывает перед оплатой; «успеет к пятнице?» без него не ответить."
+
+  - id: description
+    field: description
+    check: min_len
+    min: 40
+    weight: 3
+    applies_to: [Обувь, Одежда, Дом]
+    label: Описание
+    shop_mcp: "products[].description.plain — текст для поиска по query"
+    why: "По описанию идёт текстовый поиск; пустое описание — меньше совпадений с запросом."
+
+  - id: image_alt
+    field: image_alt
+    check: filled
+    weight: 3
+    applies_to: [Обувь, Одежда, Дом]
+    label: Подпись фото (alt)
+    shop_mcp: "products[].media[].alt_text"
+    why: "Агент не смотрит на фото — он читает подпись. Без alt фото для него пустое."
