@@ -14,6 +14,13 @@ PRICES = {
     "claude-opus-5-5": (4.00, 20.00),
     "claude-haiku-5-5": (0.10, 0.50),
 }
+# Те же модели через OpenRouter (ANTHROPIC_BASE_URL=https://openrouter.ai/api, ключ — ANTHROPIC_AUTH_TOKEN):
+# имя модели с префиксом anthropic/, цена — как у Anthropic.
+PRICES.update({
+    "anthropic/claude-sonnet-5.5": PRICES["claude-sonnet-5-5"],
+    "anthropic/claude-opus-5.5": PRICES["claude-opus-5-5"],
+    "anthropic/claude-haiku-5.5": PRICES["claude-haiku-5-5"],
+})
 
 
 @dataclass

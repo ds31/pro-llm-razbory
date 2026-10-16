@@ -99,3 +99,11 @@ def test_huge_int_is_bad_answer(box):
     client = NS(messages=NS(create=lambda **kw: NS(
         content=[block], stop_reason="tool_use", usage=NS(input_tokens=1, output_tokens=1))))
     assert run_agent("q", box, client).stop == "bad_answer"
+
+
+def test_openrouter_model_ids_priced_as_anthropic():
+    """Через OpenRouter (ANTHROPIC_BASE_URL=https://openrouter.ai/api) модель зовётся anthropic/…;
+    цена та же, что у Anthropic, — отчёт считает её одинаково при любом шлюзе."""
+    assert PRICES["anthropic/claude-sonnet-5.5"] == PRICES["claude-sonnet-5-5"]
+    assert PRICES["anthropic/claude-opus-5.5"] == PRICES["claude-opus-5-5"]
+    assert PRICES["anthropic/claude-haiku-5.5"] == PRICES["claude-haiku-5-5"]
