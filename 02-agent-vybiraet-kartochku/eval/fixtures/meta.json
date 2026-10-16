@@ -1,0 +1,84 @@
+{
+ "captured": "2026-10-17",
+ "endpoint": "https://mcp.shop.com/",
+ "protocol": "2026-07-28",
+ "note": "Снимок живого Shop MCP 17.10.2026, обезличен: магазины → merchant-NN.example, без _gsid, без structuredContent; у инструментов вне каталога схема входа убрана.",
+ "requests": {
+  "tools": {
+   "method": "tools/list",
+   "params": {}
+  },
+  "search": {
+   "method": "tools/call",
+   "params": {
+    "name": "search_catalog",
+    "arguments": {
+     "catalog": {
+      "query": "waterproof winter running shoes",
+      "context": {
+       "address_country": "US",
+       "currency": "USD",
+       "language": "en"
+      },
+      "filters": {
+       "attributes": [
+        {
+         "name": "Target gender",
+         "values": [
+          "Male"
+         ]
+        }
+       ]
+      }
+     }
+    }
+   }
+  },
+  "search-base": {
+   "method": "tools/call",
+   "params": {
+    "name": "search_catalog",
+    "arguments": {
+     "catalog": {
+      "query": "waterproof winter running shoes",
+      "context": {
+       "address_country": "US",
+       "currency": "USD",
+       "language": "en"
+      },
+      "pagination": {
+       "limit": 50
+      }
+     }
+    }
+   }
+  },
+  "search-filtered": {
+   "method": "tools/call",
+   "params": {
+    "name": "search_catalog",
+    "arguments": {
+     "catalog": {
+      "query": "waterproof winter running shoes",
+      "context": {
+       "address_country": "US",
+       "currency": "USD",
+       "language": "en"
+      },
+      "filters": {
+       "rating": {
+        "variant": {
+         "min": 4,
+         "min_count": 20
+        }
+       }
+      },
+      "pagination": {
+       "limit": 50
+      }
+     }
+    }
+   }
+  }
+ }
+}

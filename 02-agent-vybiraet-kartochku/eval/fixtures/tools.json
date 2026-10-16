@@ -1,0 +1,1706 @@
+{
+ "jsonrpc": "2.0",
+ "id": 1,
+ "result": {
+  "resultType": "complete",
+  "ttlMs": 3600000,
+  "cacheScope": "public",
+  "tools": [
+   {
+    "name": "create_checkout",
+    "description": "Prepare Shop/UCP checkout only when asked. No separate spend request is needed. Use exact variant IDs/quantities. Share continue_url unchanged for Review and pay, including requires_escalation. Never recreate: get/update its ID. Address incomplete via update. Complete ready_for_complete only after buyer approval. Creates no order.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "get_checkout",
+    "description": "Read with the same shop/exact opaque ID before update/completion or after an uncertain write. continue_url is Review and pay, not a product page/purchase proof.",
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "update_checkout",
+    "description": "Replace full checkout, not patch/payment. Read first; change only authorized fields; retain all other request fields, including empty objects/arrays. Response-only fields drop. Same shop/exact ID; check status/messages/continue_url. After uncertainty, read before retry.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "complete_checkout",
+    "description": "Send user-approved payment to the same shop/exact checkout ID with one exact offered instrument selected:true. Only completed + order proves purchase. After uncertainty, read get_checkout; never repeat completion or start a replacement purchase.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "create_cart",
+    "description": "Create a cart only when asked to save items; interest is not permission. Use exact returned variant IDs/quantities. Use create_checkout for Review and pay. Does not order.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "get_cart",
+    "description": "Read with the same shop/exact opaque ID before update or after an uncertain cart write.",
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "update_cart",
+    "description": "Replace full cart, not a patch. Read first; change only authorized fields; retain all other request fields, including empty objects/arrays. Response-only fields drop. Same shop/exact ID; check returned state. After uncertainty, read before retry.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "search_catalog",
+    "description": "Find by query/like. Anonymous works; sign-in adds saved preferences. Context soft; filters hard. Matches/options do not prove the variant. Check messages; ground options, availability, price/currency, rating, seller, and URL in the exact offer. Use get_product only for unresolved facts/options. Amounts are minor units.",
+    "inputSchema": {
+     "$defs": {
+      "d0": {
+       "description": "Reverse domain, 2+ segments.",
+       "examples": [
+        "dev.ucp.shopping.checkout",
+        "dev.ucp.common.identity_linking",
+        "com.example.loyalty_gold",
+        "com.example-shop.checkout",
+        "com.2example.cart",
+        "uk.co.example-shop.checkout",
+        "xn--p1ai.example.checkout"
+       ],
+       "pattern": "^[a-z](?:[a-z0-9-]*[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9_-]*[a-z0-9_])?)+$",
+       "title": "Reverse Domain Name",
+       "type": "string"
+      },
+      "d1": {
+       "additionalProperties": true,
+       "properties": {
+        "categories": {
+         "items": {
+          "type": "string"
+         },
+         "type": "array"
+        },
+        "price": {
+         "description": "Inclusive context.currency minor-unit bounds.",
+         "properties": {
+          "max": {
+           "allOf": [
+            {
+             "$ref": "#/$defs/d2"
+            }
+           ]
+          },
+          "min": {
+           "allOf": [
+            {
+             "$ref": "#/$defs/d2"
+            }
+           ]
+          }
+         },
+         "title": "Price Filter",
+         "type": "object"
+        }
+       },
+       "title": "Search Filters",
+       "type": "object"
+      },
+      "d2": {
+       "description": "ISO 4217 minor units: USD2, JPY0, KWD3.",
+       "maximum": 9007199254740991,
+       "minimum": 0,
+       "title": "Amount",
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false,
+     "properties": {
+      "catalog": {
+       "allOf": [
+        {
+         "allOf": [
+          {
+           "properties": {
+            "context": {
+             "additionalProperties": true,
+             "allOf": [
+              {
+               "additionalProperties": true,
+               "description": "Coarse locality; not an address.",
+               "properties": {
+                "address_country": {
+                 "description": "ISO 3166-1 alpha-2, e.g. US.",
+                 "type": "string"
+                },
+                "address_region": {
+                 "type": "string"
+                },
+                "postal_code": {
+                 "type": "string"
+                }
+               },
+               "title": "Locality",
+               "type": "object"
+              },
+              {
+               "additionalProperties": true,
+               "properties": {
+                "currency": {
+                 "description": "ISO 4217 preference/filter currency; verify output.",
+                 "type": "string"
+                },
+                "eligibility": {
+                 "description": "Nonidentifying reverse-domain benefits; ignore unknowns.",
+                 "items": {
+                  "$ref": "#/$defs/d0"
+                 },
+                 "type": "array",
+                 "uniqueItems": true
+                },
+                "intent": {
+                 "description": "Relevance hint, e.g. 'gift under $50'.",
+                 "type": "string"
+                },
+                "language": {
+                 "description": "BCP 47 preference, e.g. fr-CA.",
+                 "type": "string"
+                },
+                "location": {
+                 "description": "Opaque merchant location ID, not locality.",
+                 "type": "string"
+                },
+                "payment": {
+                 "description": "Advertised handlers, most preferred first; ignore unknowns.",
+                 "items": {
+                  "properties": {
+                   "handler": {
+                    "allOf": [
+                     {
+                      "$ref": "#/$defs/d0"
+                     }
+                    ],
+                    "description": "Merchant ucp.payment_handlers key."
+                   },
+                   "types": {
+                    "description": "Instrument types, most preferred first; ignore unknowns.",
+                    "items": {
+                     "type": "string"
+                    },
+                    "type": "array"
+                   }
+                  },
+                  "required": [
+                   "handler"
+                  ],
+                  "type": "object"
+                 },
+                 "type": "array"
+                }
+               },
+               "type": "object"
+              }
+             ],
+             "description": "Soft relevance/localization; checkout wins.",
+             "title": "Context",
+             "type": "object"
+            },
+            "filters": {
+             "$ref": "#/$defs/d1"
+            },
+            "pagination": {
+             "properties": {
+              "cursor": {
+               "type": "string"
+              },
+              "limit": {
+               "minimum": 1,
+               "type": "integer"
+              }
+             },
+             "type": "object"
+            },
+            "query": {
+             "type": "string"
+            },
+            "signals": {
+             "additionalProperties": true,
+             "description": "Observed/verified platform facts; no buyer claims.",
+             "properties": {
+              "dev.ucp.buyer_ip": {
+               "type": "string"
+              },
+              "dev.ucp.user_agent": {
+               "type": "string"
+              }
+             },
+             "propertyNames": {
+              "allOf": [
+               {
+                "$ref": "#/$defs/d0"
+               }
+              ]
+             },
+             "title": "Signals",
+             "type": "object"
+            }
+           },
+           "type": "object"
+          },
+          {
+           "anyOf": [
+            {
+             "required": [
+              "query"
+             ]
+            },
+            {
+             "required": [
+              "like"
+             ]
+            }
+           ],
+           "properties": {
+            "filters": {
+             "allOf": [
+              {
+               "$ref": "#/$defs/d1"
+              },
+              {
+               "allOf": [
+                {
+                 "properties": {
+                  "available": {
+                   "default": true,
+                   "type": "boolean"
+                  }
+                 },
+                 "title": "Shopify Filters",
+                 "type": "object"
+                },
+                {
+                 "properties": {
+                  "condition": {
+                   "items": {
+                    "type": "string"
+                   },
+                   "type": "array"
+                  },
+                  "ships_from": {
+                   "items": {
+                    "properties": {
+                     "country": {
+                      "pattern": "^[A-Z]{2}$",
+                      "type": "string"
+                     }
+                    },
+                    "required": [
+                     "country"
+                    ],
+                    "type": "object"
+                   },
+                   "type": "array"
+                  },
+                  "ships_to": {
+                   "properties": {
+                    "country": {
+                     "pattern": "^[A-Z]{2}$",
+                     "type": "string"
+                    },
+                    "postal_code": {
+                     "type": "string"
+                    },
+                    "region": {
+                     "type": "string"
+                    }
+                   },
+                   "required": [
+                    "country"
+                   ],
+                   "type": "object"
+                  },
+                  "shops": {
+                   "items": {
+                    "type": "string"
+                   },
+                   "maxItems": 1000,
+                   "type": "array"
+                  }
+                 },
+                 "type": "object"
+                }
+               ],
+               "title": "Global Filters"
+              },
+              {
+               "properties": {
+                "attributes": {
+                 "items": {
+                  "properties": {
+                   "name": {
+                    "type": "string"
+                   },
+                   "values": {
+                    "items": {
+                     "type": "string"
+                    },
+                    "maxItems": 50,
+                    "minItems": 1,
+                    "type": "array"
+                   }
+                  },
+                  "required": [
+                   "name",
+                   "values"
+                  ],
+                  "type": "object"
+                 },
+                 "maxItems": 25,
+                 "type": "array"
+                },
+                "categories": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "type": "array"
+                },
+                "price_tier": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "type": "array"
+                },
+                "rating": {
+                 "properties": {
+                  "variant": {
+                   "properties": {
+                    "min": {
+                     "maximum": 5,
+                     "minimum": 0,
+                     "type": "number"
+                    },
+                    "min_count": {
+                     "maximum": 2147483647,
+                     "minimum": 0,
+                     "type": "integer"
+                    }
+                   },
+                   "type": "object"
+                  }
+                 },
+                 "type": "object"
+                }
+               },
+               "type": "object"
+              }
+             ],
+             "title": "Global Search Filters"
+            }
+           },
+           "type": "object"
+          }
+         ],
+         "title": "Global Search Request",
+         "type": "object"
+        },
+        {
+         "anyOf": [
+          {
+           "required": [
+            "query"
+           ]
+          },
+          {
+           "required": [
+            "like"
+           ]
+          }
+         ],
+         "properties": {
+          "catalog_id": {
+           "description": "Saved catalog ID whose configuration constrains search.",
+           "type": "string"
+          },
+          "context": {
+           "additionalProperties": true,
+           "properties": {
+            "address_country": {
+             "type": "string"
+            },
+            "address_region": {
+             "type": "string"
+            },
+            "currency": {
+             "type": "string"
+            },
+            "intent": {
+             "type": "string"
+            },
+            "language": {
+             "type": "string"
+            },
+            "postal_code": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          },
+          "filters": {
+           "additionalProperties": true,
+           "description": "Hard requirements; fields AND, stated lists OR. Check messages/every offer.",
+           "properties": {
+            "attributes": {
+             "description": "Attributes AND; each value list OR. Check ignored-name messages.",
+             "items": {
+              "properties": {
+               "name": {
+                "description": "Supported names: Color, Size, Target gender.",
+                "type": "string"
+               },
+               "values": {
+                "description": "OR across taxonomy values.",
+                "items": {
+                 "type": "string"
+                },
+                "maxItems": 50,
+                "minItems": 1,
+                "type": "array"
+               }
+              },
+              "required": [
+               "name",
+               "values"
+              ],
+              "type": "object"
+             },
+             "maxItems": 25,
+             "type": "array"
+            },
+            "available": {
+             "default": true,
+             "description": "true/omitted: sale-ready only; false: include unavailable.",
+             "type": "boolean"
+            },
+            "categories": {
+             "description": "OR taxonomy category GIDs.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "condition": {
+             "description": "OR new/secondhand; omit for either.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "price": {
+             "properties": {
+              "max": {
+               "type": "integer"
+              },
+              "min": {
+               "type": "integer"
+              }
+             },
+             "type": "object"
+            },
+            "price_tier": {
+             "description": "OR category-relative tiers, not a budget cap; check ignored-value messages.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "rating": {
+             "properties": {
+              "variant": {
+               "description": "At least one variant must meet these thresholds.",
+               "properties": {
+                "min": {
+                 "description": "Minimum rating on a 0–5 scale.",
+                 "maximum": 5,
+                 "minimum": 0,
+                 "type": "number"
+                },
+                "min_count": {
+                 "description": "Minimum variant review count.",
+                 "maximum": 2147483647,
+                 "minimum": 0,
+                 "type": "integer"
+                }
+               },
+               "type": "object"
+              }
+             },
+             "type": "object"
+            },
+            "ships_from": {
+             "description": "OR origins; omit for any.",
+             "items": {
+              "properties": {
+               "country": {
+                "description": "ISO 3166-1 alpha-2.",
+                "pattern": "^[A-Z]{2}$",
+                "type": "string"
+               }
+              },
+              "required": [
+               "country"
+              ],
+              "type": "object"
+             },
+             "type": "array"
+            },
+            "ships_to": {
+             "description": "Hard destination; context may supply it if omitted; matching context may refine estimates.",
+             "properties": {
+              "country": {
+               "description": "ISO 3166-1 alpha-2.",
+               "pattern": "^[A-Z]{2}$",
+               "type": "string"
+              },
+              "postal_code": {
+               "type": "string"
+              },
+              "region": {
+               "type": "string"
+              }
+             },
+             "required": [
+              "country"
+             ],
+             "type": "object"
+            },
+            "shops": {
+             "description": "OR seller.id Shop GIDs/domains; check unmatched messages.",
+             "items": {
+              "type": "string"
+             },
+             "maxItems": 1000,
+             "type": "array"
+            }
+           },
+           "type": "object"
+          },
+          "like": {
+           "description": "One product/variant ID or image reference for similarity. Add query to refine an image reference. Put hard requirements in supported filters.",
+           "items": {
+            "oneOf": [
+             {
+              "additionalProperties": false,
+              "properties": {
+               "id": {
+                "description": "Exact Shopify product or variant GID.",
+                "pattern": "^gid://shopify/",
+                "type": "string"
+               }
+              },
+              "required": [
+               "id"
+              ],
+              "title": "Item Reference"
+             },
+             {
+              "additionalProperties": false,
+              "properties": {
+               "image": {
+                "additionalProperties": false,
+                "properties": {
+                 "content_type": {
+                  "description": "Image MIME type, e.g. image/jpeg or image/webp.",
+                  "type": "string"
+                 },
+                 "data": {
+                  "contentEncoding": "base64",
+                  "description": "Base64-encoded image bytes.",
+                  "type": "string"
+                 }
+                },
+                "required": [
+                 "content_type",
+                 "data"
+                ],
+                "type": "object"
+               }
+              },
+              "required": [
+               "image"
+              ],
+              "title": "Image Content"
+             }
+            ],
+            "title": "Like Item",
+            "type": "object"
+           },
+           "maxItems": 2,
+           "minItems": 1,
+           "type": "array"
+          },
+          "pagination": {
+           "properties": {
+            "cursor": {
+             "description": "Pass unchanged with the same query, like, context, and filters.",
+             "type": "string"
+            },
+            "limit": {
+             "default": 10,
+             "description": "Page size. Defaults to 10; maximum 50.",
+             "maximum": 50,
+             "minimum": 1,
+             "type": "integer"
+            }
+           },
+           "type": "object"
+          },
+          "query": {
+           "description": "Preserve intent; clarify only. Add no preferences/popularity. Put hard requirements in supported filters.",
+           "type": "string"
+          },
+          "signals": {
+           "additionalProperties": true,
+           "properties": {
+            "dev.ucp.buyer_ip": {
+             "type": "string"
+            },
+            "dev.ucp.user_agent": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          }
+         },
+         "type": "object"
+        },
+        {
+         "not": {
+          "required": [
+           "attribution"
+          ]
+         }
+        },
+        {
+         "not": {
+          "required": [
+           "view"
+          ]
+         }
+        }
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "catalog"
+     ],
+     "type": "object"
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "lookup_catalog",
+    "description": "Resolve known product/variant IDs, GTINs, UPCs, or URLs. Use search_catalog for discovery; get_product only for unresolved options/details. Preserve IDs/URLs; ground claims in the exact offer. Amounts are minor units.",
+    "inputSchema": {
+     "$defs": {
+      "d0": {
+       "description": "Reverse domain, 2+ segments.",
+       "examples": [
+        "dev.ucp.shopping.checkout",
+        "dev.ucp.common.identity_linking",
+        "com.example.loyalty_gold",
+        "com.example-shop.checkout",
+        "com.2example.cart",
+        "uk.co.example-shop.checkout",
+        "xn--p1ai.example.checkout"
+       ],
+       "pattern": "^[a-z](?:[a-z0-9-]*[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9_-]*[a-z0-9_])?)+$",
+       "title": "Reverse Domain Name",
+       "type": "string"
+      },
+      "d1": {
+       "description": "ISO 4217 minor units: USD2, JPY0, KWD3.",
+       "maximum": 9007199254740991,
+       "minimum": 0,
+       "title": "Amount",
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false,
+     "properties": {
+      "catalog": {
+       "allOf": [
+        {
+         "allOf": [
+          {
+           "properties": {
+            "context": {
+             "additionalProperties": true,
+             "allOf": [
+              {
+               "additionalProperties": true,
+               "description": "Coarse locality; not an address.",
+               "properties": {
+                "address_country": {
+                 "description": "ISO 3166-1 alpha-2, e.g. US.",
+                 "type": "string"
+                },
+                "address_region": {
+                 "type": "string"
+                },
+                "postal_code": {
+                 "type": "string"
+                }
+               },
+               "title": "Locality",
+               "type": "object"
+              },
+              {
+               "additionalProperties": true,
+               "properties": {
+                "currency": {
+                 "description": "ISO 4217 preference/filter currency; verify output.",
+                 "type": "string"
+                },
+                "eligibility": {
+                 "description": "Nonidentifying reverse-domain benefits; ignore unknowns.",
+                 "items": {
+                  "$ref": "#/$defs/d0"
+                 },
+                 "type": "array",
+                 "uniqueItems": true
+                },
+                "intent": {
+                 "description": "Relevance hint, e.g. 'gift under $50'.",
+                 "type": "string"
+                },
+                "language": {
+                 "description": "BCP 47 preference, e.g. fr-CA.",
+                 "type": "string"
+                },
+                "location": {
+                 "description": "Opaque merchant location ID, not locality.",
+                 "type": "string"
+                },
+                "payment": {
+                 "description": "Advertised handlers, most preferred first; ignore unknowns.",
+                 "items": {
+                  "properties": {
+                   "handler": {
+                    "allOf": [
+                     {
+                      "$ref": "#/$defs/d0"
+                     }
+                    ],
+                    "description": "Merchant ucp.payment_handlers key."
+                   },
+                   "types": {
+                    "description": "Instrument types, most preferred first; ignore unknowns.",
+                    "items": {
+                     "type": "string"
+                    },
+                    "type": "array"
+                   }
+                  },
+                  "required": [
+                   "handler"
+                  ],
+                  "type": "object"
+                 },
+                 "type": "array"
+                }
+               },
+               "type": "object"
+              }
+             ],
+             "description": "Soft relevance/localization; checkout wins.",
+             "title": "Context",
+             "type": "object"
+            },
+            "filters": {
+             "allOf": [
+              {
+               "additionalProperties": true,
+               "properties": {
+                "categories": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "type": "array"
+                },
+                "price": {
+                 "description": "Inclusive context.currency minor-unit bounds.",
+                 "properties": {
+                  "max": {
+                   "allOf": [
+                    {
+                     "$ref": "#/$defs/d1"
+                    }
+                   ]
+                  },
+                  "min": {
+                   "allOf": [
+                    {
+                     "$ref": "#/$defs/d1"
+                    }
+                   ]
+                  }
+                 },
+                 "title": "Price Filter",
+                 "type": "object"
+                }
+               },
+               "title": "Search Filters",
+               "type": "object"
+              }
+             ]
+            },
+            "ids": {
+             "items": {
+              "type": "string"
+             },
+             "minItems": 1,
+             "type": "array"
+            },
+            "signals": {
+             "additionalProperties": true,
+             "description": "Observed/verified platform facts; no buyer claims.",
+             "properties": {
+              "dev.ucp.buyer_ip": {
+               "type": "string"
+              },
+              "dev.ucp.user_agent": {
+               "type": "string"
+              }
+             },
+             "propertyNames": {
+              "allOf": [
+               {
+                "$ref": "#/$defs/d0"
+               }
+              ]
+             },
+             "title": "Signals",
+             "type": "object"
+            }
+           },
+           "required": [
+            "ids"
+           ],
+           "type": "object"
+          },
+          {
+           "properties": {
+            "filters": {
+             "allOf": [
+              {
+               "properties": {
+                "available": {
+                 "default": true,
+                 "type": "boolean"
+                }
+               },
+               "title": "Shopify Filters",
+               "type": "object"
+              },
+              {
+               "properties": {
+                "condition": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "type": "array"
+                },
+                "ships_from": {
+                 "items": {
+                  "properties": {
+                   "country": {
+                    "pattern": "^[A-Z]{2}$",
+                    "type": "string"
+                   }
+                  },
+                  "required": [
+                   "country"
+                  ],
+                  "type": "object"
+                 },
+                 "type": "array"
+                },
+                "ships_to": {
+                 "properties": {
+                  "country": {
+                   "pattern": "^[A-Z]{2}$",
+                   "type": "string"
+                  },
+                  "postal_code": {
+                   "type": "string"
+                  },
+                  "region": {
+                   "type": "string"
+                  }
+                 },
+                 "required": [
+                  "country"
+                 ],
+                 "type": "object"
+                },
+                "shops": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "maxItems": 1000,
+                 "type": "array"
+                }
+               },
+               "type": "object"
+              }
+             ],
+             "title": "Global Filters"
+            }
+           },
+           "type": "object"
+          }
+         ],
+         "title": "Global Lookup Request",
+         "type": "object"
+        },
+        {
+         "properties": {
+          "context": {
+           "additionalProperties": true,
+           "properties": {
+            "address_country": {
+             "type": "string"
+            },
+            "address_region": {
+             "type": "string"
+            },
+            "currency": {
+             "type": "string"
+            },
+            "intent": {
+             "type": "string"
+            },
+            "language": {
+             "type": "string"
+            },
+            "postal_code": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          },
+          "filters": {
+           "additionalProperties": true,
+           "description": "Hard requirements; fields AND, stated lists OR. Verify the offer.",
+           "properties": {
+            "available": {
+             "default": true,
+             "description": "true/omitted: sale-ready only; false: include unavailable.",
+             "type": "boolean"
+            },
+            "categories": {
+             "description": "OR taxonomy category GIDs.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "condition": {
+             "description": "OR new/secondhand; omit for either.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "price": {
+             "properties": {
+              "max": {
+               "type": "integer"
+              },
+              "min": {
+               "type": "integer"
+              }
+             },
+             "type": "object"
+            },
+            "ships_from": {
+             "description": "OR origins; omit for any.",
+             "items": {
+              "properties": {
+               "country": {
+                "description": "ISO 3166-1 alpha-2.",
+                "pattern": "^[A-Z]{2}$",
+                "type": "string"
+               }
+              },
+              "required": [
+               "country"
+              ],
+              "type": "object"
+             },
+             "type": "array"
+            },
+            "ships_to": {
+             "description": "Hard destination; context may supply it if omitted; matching context may refine estimates.",
+             "properties": {
+              "country": {
+               "description": "ISO 3166-1 alpha-2.",
+               "pattern": "^[A-Z]{2}$",
+               "type": "string"
+              },
+              "postal_code": {
+               "type": "string"
+              },
+              "region": {
+               "type": "string"
+              }
+             },
+             "required": [
+              "country"
+             ],
+             "type": "object"
+            },
+            "shops": {
+             "description": "OR seller.id Shop GIDs/domains; check unmatched messages.",
+             "items": {
+              "type": "string"
+             },
+             "maxItems": 1000,
+             "type": "array"
+            }
+           },
+           "type": "object"
+          },
+          "ids": {
+           "description": "Up to 50 exact IDs/URLs; preserve returned values.",
+           "items": {
+            "type": "string"
+           },
+           "maxItems": 50,
+           "minItems": 1,
+           "type": "array"
+          },
+          "signals": {
+           "additionalProperties": true,
+           "properties": {
+            "dev.ucp.buyer_ip": {
+             "type": "string"
+            },
+            "dev.ucp.user_agent": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          }
+         },
+         "required": [
+          "ids"
+         ],
+         "type": "object"
+        },
+        {
+         "not": {
+          "required": [
+           "attribution"
+          ]
+         }
+        },
+        {
+         "not": {
+          "required": [
+           "view"
+          ]
+         }
+        }
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "catalog"
+     ],
+     "type": "object"
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "get_product",
+    "description": "Resolve missing details/options for a known product. Use its returned ID/exact option name-label pairs; verify effective selection because requests may drop. Ground availability, seller, price/currency, rating, and URL in the exact offer. Skip if prior results prove facts. Amounts are minor units.",
+    "inputSchema": {
+     "$defs": {
+      "d0": {
+       "description": "Reverse domain, 2+ segments.",
+       "examples": [
+        "dev.ucp.shopping.checkout",
+        "dev.ucp.common.identity_linking",
+        "com.example.loyalty_gold",
+        "com.example-shop.checkout",
+        "com.2example.cart",
+        "uk.co.example-shop.checkout",
+        "xn--p1ai.example.checkout"
+       ],
+       "pattern": "^[a-z](?:[a-z0-9-]*[a-z0-9])?(?:\\.[a-z0-9](?:[a-z0-9_-]*[a-z0-9_])?)+$",
+       "title": "Reverse Domain Name",
+       "type": "string"
+      },
+      "d1": {
+       "description": "ISO 4217 minor units: USD2, JPY0, KWD3.",
+       "maximum": 9007199254740991,
+       "minimum": 0,
+       "title": "Amount",
+       "type": "integer"
+      }
+     },
+     "additionalProperties": false,
+     "properties": {
+      "catalog": {
+       "allOf": [
+        {
+         "allOf": [
+          {
+           "properties": {
+            "context": {
+             "additionalProperties": true,
+             "allOf": [
+              {
+               "additionalProperties": true,
+               "description": "Coarse locality; not an address.",
+               "properties": {
+                "address_country": {
+                 "description": "ISO 3166-1 alpha-2, e.g. US.",
+                 "type": "string"
+                },
+                "address_region": {
+                 "type": "string"
+                },
+                "postal_code": {
+                 "type": "string"
+                }
+               },
+               "title": "Locality",
+               "type": "object"
+              },
+              {
+               "additionalProperties": true,
+               "properties": {
+                "currency": {
+                 "description": "ISO 4217 preference/filter currency; verify output.",
+                 "type": "string"
+                },
+                "eligibility": {
+                 "description": "Nonidentifying reverse-domain benefits; ignore unknowns.",
+                 "items": {
+                  "$ref": "#/$defs/d0"
+                 },
+                 "type": "array",
+                 "uniqueItems": true
+                },
+                "intent": {
+                 "description": "Relevance hint, e.g. 'gift under $50'.",
+                 "type": "string"
+                },
+                "language": {
+                 "description": "BCP 47 preference, e.g. fr-CA.",
+                 "type": "string"
+                },
+                "location": {
+                 "description": "Opaque merchant location ID, not locality.",
+                 "type": "string"
+                },
+                "payment": {
+                 "description": "Advertised handlers, most preferred first; ignore unknowns.",
+                 "items": {
+                  "properties": {
+                   "handler": {
+                    "allOf": [
+                     {
+                      "$ref": "#/$defs/d0"
+                     }
+                    ],
+                    "description": "Merchant ucp.payment_handlers key."
+                   },
+                   "types": {
+                    "description": "Instrument types, most preferred first; ignore unknowns.",
+                    "items": {
+                     "type": "string"
+                    },
+                    "type": "array"
+                   }
+                  },
+                  "required": [
+                   "handler"
+                  ],
+                  "type": "object"
+                 },
+                 "type": "array"
+                }
+               },
+               "type": "object"
+              }
+             ],
+             "description": "Soft relevance/localization; checkout wins.",
+             "title": "Context",
+             "type": "object"
+            },
+            "filters": {
+             "allOf": [
+              {
+               "additionalProperties": true,
+               "properties": {
+                "categories": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "type": "array"
+                },
+                "price": {
+                 "description": "Inclusive context.currency minor-unit bounds.",
+                 "properties": {
+                  "max": {
+                   "allOf": [
+                    {
+                     "$ref": "#/$defs/d1"
+                    }
+                   ]
+                  },
+                  "min": {
+                   "allOf": [
+                    {
+                     "$ref": "#/$defs/d1"
+                    }
+                   ]
+                  }
+                 },
+                 "title": "Price Filter",
+                 "type": "object"
+                }
+               },
+               "title": "Search Filters",
+               "type": "object"
+              }
+             ]
+            },
+            "id": {
+             "type": "string"
+            },
+            "preferences": {
+             "description": "Ordered option names, relaxed from the end; not hard requirements.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "selected": {
+             "items": {
+              "properties": {
+               "id": {
+                "description": "Copy returned option_value.id unchanged.",
+                "type": "string"
+               },
+               "label": {
+                "type": "string"
+               },
+               "name": {
+                "type": "string"
+               }
+              },
+              "required": [
+               "name",
+               "label"
+              ],
+              "title": "Selected Option",
+              "type": "object"
+             },
+             "type": "array"
+            },
+            "signals": {
+             "additionalProperties": true,
+             "description": "Observed/verified platform facts; no buyer claims.",
+             "properties": {
+              "dev.ucp.buyer_ip": {
+               "type": "string"
+              },
+              "dev.ucp.user_agent": {
+               "type": "string"
+              }
+             },
+             "propertyNames": {
+              "allOf": [
+               {
+                "$ref": "#/$defs/d0"
+               }
+              ]
+             },
+             "title": "Signals",
+             "type": "object"
+            }
+           },
+           "required": [
+            "id"
+           ],
+           "type": "object"
+          },
+          {
+           "properties": {
+            "filters": {
+             "allOf": [
+              {
+               "properties": {
+                "available": {
+                 "default": true,
+                 "type": "boolean"
+                }
+               },
+               "title": "Shopify Filters",
+               "type": "object"
+              },
+              {
+               "properties": {
+                "condition": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "type": "array"
+                },
+                "ships_from": {
+                 "items": {
+                  "properties": {
+                   "country": {
+                    "pattern": "^[A-Z]{2}$",
+                    "type": "string"
+                   }
+                  },
+                  "required": [
+                   "country"
+                  ],
+                  "type": "object"
+                 },
+                 "type": "array"
+                },
+                "ships_to": {
+                 "properties": {
+                  "country": {
+                   "pattern": "^[A-Z]{2}$",
+                   "type": "string"
+                  },
+                  "postal_code": {
+                   "type": "string"
+                  },
+                  "region": {
+                   "type": "string"
+                  }
+                 },
+                 "required": [
+                  "country"
+                 ],
+                 "type": "object"
+                },
+                "shops": {
+                 "items": {
+                  "type": "string"
+                 },
+                 "maxItems": 1000,
+                 "type": "array"
+                }
+               },
+               "type": "object"
+              }
+             ],
+             "title": "Global Filters"
+            }
+           },
+           "type": "object"
+          }
+         ],
+         "title": "Global Get Product Request",
+         "type": "object"
+        },
+        {
+         "properties": {
+          "context": {
+           "additionalProperties": true,
+           "properties": {
+            "address_country": {
+             "type": "string"
+            },
+            "address_region": {
+             "type": "string"
+            },
+            "currency": {
+             "type": "string"
+            },
+            "intent": {
+             "type": "string"
+            },
+            "language": {
+             "type": "string"
+            },
+            "postal_code": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          },
+          "filters": {
+           "additionalProperties": true,
+           "description": "Hard requirements; fields AND, stated lists OR. Verify the offer.",
+           "properties": {
+            "available": {
+             "default": true,
+             "description": "true/omitted: sale-ready only; false: include unavailable.",
+             "type": "boolean"
+            },
+            "categories": {
+             "description": "OR taxonomy category GIDs.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "condition": {
+             "description": "OR new/secondhand; omit for either.",
+             "items": {
+              "type": "string"
+             },
+             "type": "array"
+            },
+            "price": {
+             "properties": {
+              "max": {
+               "type": "integer"
+              },
+              "min": {
+               "type": "integer"
+              }
+             },
+             "type": "object"
+            },
+            "ships_from": {
+             "description": "OR origins; omit for any.",
+             "items": {
+              "properties": {
+               "country": {
+                "description": "ISO 3166-1 alpha-2.",
+                "pattern": "^[A-Z]{2}$",
+                "type": "string"
+               }
+              },
+              "required": [
+               "country"
+              ],
+              "type": "object"
+             },
+             "type": "array"
+            },
+            "ships_to": {
+             "description": "Hard destination; context may supply it if omitted; matching context may refine estimates.",
+             "properties": {
+              "country": {
+               "description": "ISO 3166-1 alpha-2.",
+               "pattern": "^[A-Z]{2}$",
+               "type": "string"
+              },
+              "postal_code": {
+               "type": "string"
+              },
+              "region": {
+               "type": "string"
+              }
+             },
+             "required": [
+              "country"
+             ],
+             "type": "object"
+            },
+            "shops": {
+             "description": "OR seller.id Shop GIDs/domains; check unmatched messages.",
+             "items": {
+              "type": "string"
+             },
+             "maxItems": 1000,
+             "type": "array"
+            }
+           },
+           "type": "object"
+          },
+          "id": {
+           "description": "Exact returned product ID; resolve URL/variant via lookup_catalog first.",
+           "type": "string"
+          },
+          "preferences": {
+           "items": {
+            "type": "string"
+           },
+           "type": "array"
+          },
+          "selected": {
+           "description": "Exact returned name/label pairs; verify effective selection because requests may drop.",
+           "items": {
+            "properties": {
+             "label": {
+              "type": "string"
+             },
+             "name": {
+              "type": "string"
+             }
+            },
+            "type": "object"
+           },
+           "type": "array"
+          },
+          "signals": {
+           "additionalProperties": true,
+           "properties": {
+            "dev.ucp.buyer_ip": {
+             "type": "string"
+            },
+            "dev.ucp.user_agent": {
+             "type": "string"
+            }
+           },
+           "type": "object"
+          }
+         },
+         "required": [
+          "id"
+         ],
+         "type": "object"
+        },
+        {
+         "not": {
+          "required": [
+           "attribution"
+          ]
+         }
+        },
+        {
+         "not": {
+          "required": [
+           "view"
+          ]
+         }
+        }
+       ],
+       "type": "object"
+      }
+     },
+     "required": [
+      "catalog"
+     ],
+     "type": "object"
+    },
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "search_orders",
+    "description": "Search signed-in buyer's Shop-tracked orders/standalone shipments. Omit query for recent. Missing is unknown. events[].type is fulfillment; use status/carrier tracking for progress. LABEL_CREATED proves only a label. Email-detected records may omit money/tracking/links. Page only as needed.",
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "get_account",
+    "description": "Read signed-in Shop account, addresses, budget/cards. For missing checkout delivery, copy one addresses[] entry unchanged into fulfillment destinations and select its id; preferred_address_id is default. buyer.email is display-only, never checkout input. Missing is unknown; empty payment.instruments means no visible budget.",
+    "annotations": {
+     "readOnlyHint": true,
+     "destructiveHint": false,
+     "idempotentHint": true,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "create_spend_request",
+    "description": "Request buyer approval for a purchase where the agent enters a payment credential into a website's checkout form using a browser. Provide the purchase terms and spending limit; name a saved card, or omit it to use the account's preferred card. Share the returned continue_url unchanged for review and approval. This does not pay or place an order.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "get_spend_request",
+    "description": "Check the spend request's status. After buyer approval, returns the payment credential. Use it unchanged and only for the approved purchase.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "update_spend_request",
+    "description": "Update the request's address, items, totals or spending limit. Omitted fields stay unchanged. Wallet decides whether its current state allows the update.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "cancel_spend_request",
+    "description": "Cancel the spend request; this does not cancel/refund the purchase or revoke an issued credential.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   },
+   {
+    "name": "complete_spend_request",
+    "description": "Report the purchase attempt's outcome as success or error. Include order details when available, or failure information for an error. This records your report, not payment confirmation.",
+    "annotations": {
+     "readOnlyHint": false,
+     "destructiveHint": true,
+     "idempotentHint": false,
+     "openWorldHint": true
+    }
+   }
+  ]
+ }
+}
