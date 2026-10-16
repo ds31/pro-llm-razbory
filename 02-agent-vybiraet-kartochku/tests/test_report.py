@@ -65,3 +65,8 @@ def test_titles_are_escaped():
     audit = run_audit(cards, erp, load_rules(ROOT / "audit" / "rules.yaml"), load_scenarios(ROOT / "eval" / "scenarios.yaml"))
     out = render_report(s, {"search": payload, "search-base": payload, "search-filtered": payload}, audit)
     assert "<script>x</script>" not in out and "&lt;script&gt;" in out
+
+
+def test_size_names_line_lists_only_size_options(html):
+    line = re.search(r"Размер в одной выдаче назван по-разному:(.*?)Жёсткий", html, re.S).group(1)
+    assert "Numeric shoe size" in line and "Shoe size" in line and "Shoe fit" not in line

@@ -237,7 +237,7 @@ def _search_screen(s: dict, payloads: dict) -> str:
         f'<td style="width:40%"><div class="hbar" style="width:{100 * fields.get(k, {"present": 0})["present"] / max(s["products"], 1):.0f}%"></div></td></tr>'
         for k, label in key_fields)
     size_names = [f["field"][8:-1] for f in s["card_fields"] if f["field"].startswith("options[")
-                  and any(w in f["field"].lower() for w in ("size", "pointure", "fit"))]
+                  and any(w in f["field"].lower() for w in ("size", "pointure"))]
     return f"""
 <section class="screen" id="search">
   <div class="screen-label">Экран 2 · Ключевой шаг</div>
