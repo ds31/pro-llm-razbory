@@ -8,3 +8,4 @@ __pycache__/
 eval/out/
 **/eval/out/
 .DS_Store
+**/eval/out-*/
