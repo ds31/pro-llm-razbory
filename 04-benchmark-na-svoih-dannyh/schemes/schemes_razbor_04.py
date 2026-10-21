@@ -102,7 +102,7 @@ def inside():
         for i in range(n):
             by = y + 18 + i * 22
             fixed = 150
-            hist = 34 * i
+            hist = 28 * i
             s.back.append(f'<rect x="200" y="{by}" width="{fixed}" height="16" rx="3" fill="#ffffff" stroke="{HAIR_CARD}"/>')
             if hist:
                 s.back.append(f'<rect x="{200 + fixed}" y="{by}" width="{hist}" height="16" rx="3" '
@@ -119,7 +119,7 @@ def inside():
     s.group(gx, 92, 296, 384, 'claude-opus-5.5 · на ответ')
     facts = [('', 'A', 'B'), ('шагов цикла', '6,8', '3,1'), ('токенов входа', '15 432', '6 296'),
              ('токенов выхода', '1 067', '383'), ('доля входа в цене', '74 %', '77 %'),
-             ('$ за ответ', '0,083', '0,033'), ('секунд на ответ', '21,8', '8,6')]
+             ('$ за ответ', '0,083', '0,033'), ('секунд на ответ', '21,8', '8,5')]
     for i, (k, a, b) in enumerate(facts):
         yy = 140 + i * 34
         s.text(gx + 16, yy, k, 12.5, INK2, 'start')
