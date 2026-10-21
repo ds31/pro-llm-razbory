@@ -1,0 +1,273 @@
+# Набор eval агента-аналитика: 30 вопросов руководителя о синтетической розничной сети.
+#
+# Поля вопроса:
+#   id            — короткий ключ, по нему сравниваются прогоны;
+#   tag           — какую ловушку проверяет вопрос (список — в tags); none — контрольный вопрос без ловушки;
+#   question      — текст так, как его задаёт руководитель;
+#   check_sql     — живой эталон: SELECT по сырым данным с правилами компании, считается при каждой проверке;
+#   trap_sql      — запрос, который попадает в ловушку; обязателен для всех тегов, кроме none,
+#                   и обязан давать другое число (проверка «ловушка кусает»);
+#   tolerance_pct — допуск в процентах; по умолчанию — tolerance_pct файла; 0 — точное совпадение (номер, счёт).
+#
+# Относительное время («последний месяц», «последние шесть месяцев») — только через данные:
+# последний закрытый месяц = последний месяц со снимком остатков. Дата-литерал в эталоне
+# устаревает при первой же дозагрузке.
+version: 1
+tolerance_pct: 0.5
+tags:
+  none: без ловушки
+  dup_join: дубли в справочнике
+  anomaly: аномальные строки
+  open_month: незакрытый месяц
+  definition: определение метрики
+questions:
+- id: Q01
+  tag: none
+  question: Какая выручка сети за март 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-03-01' AND '2026-03-31'
+- id: Q02
+  tag: none
+  question: Сколько единиц товара продала сеть в январе 2026 года?
+  check_sql: >-
+    SELECT sum(qty) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-01-01' AND '2026-01-31'
+- id: Q03
+  tag: none
+  question: Какая выручка магазина №3 за второй квартал 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND store_id = 3 AND sale_date BETWEEN '2026-04-01'
+    AND '2026-06-30'
+- id: Q04
+  tag: none
+  question: Какая выручка магазинов региона «Юг» за февраль 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN raw.stores st USING (store_id) WHERE abs(s.qty) < 1000 AND st.region
+    = 'Юг' AND s.sale_date BETWEEN '2026-02-01' AND '2026-02-28'
+- id: Q05
+  tag: none
+  question: Сколько магазинов сети торговали в сентябре 2026 года?
+  check_sql: >-
+    SELECT count(DISTINCT store_id) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01' AND
+    '2026-09-30'
+  tolerance_pct: 0
+- id: Q06
+  tag: none
+  question: >-
+    На какую сумму покупатели вернули товар в мае 2026 года? Ответ — в рублях, положительным числом.
+  check_sql: >-
+    SELECT -sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND qty < 0 AND sale_date BETWEEN '2026-05-01' AND
+    '2026-05-31'
+- id: Q07
+  tag: dup_join
+  question: Какая выручка категории «Напитки» за сентябрь 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN (SELECT DISTINCT sku, category, brand FROM raw.products) p USING
+    (sku) WHERE abs(s.qty) < 1000 AND p.category = 'Напитки' AND s.sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+  trap_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN raw.products p USING (sku) WHERE abs(s.qty) < 1000 AND p.category
+    = 'Напитки' AND s.sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+- id: Q08
+  tag: dup_join
+  question: Какая выручка бренда «Луговое» за первый квартал 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN (SELECT DISTINCT sku, category, brand FROM raw.products) p USING
+    (sku) WHERE abs(s.qty) < 1000 AND p.brand = 'Луговое' AND s.sale_date BETWEEN '2026-01-01' AND '2026-03-31'
+  trap_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN raw.products p USING (sku) WHERE abs(s.qty) < 1000 AND p.brand =
+    'Луговое' AND s.sale_date BETWEEN '2026-01-01' AND '2026-03-31'
+- id: Q09
+  tag: dup_join
+  question: Сколько разных товаров (SKU) в ассортименте сети?
+  check_sql: SELECT count(DISTINCT sku) FROM raw.products
+  trap_sql: SELECT count(*) FROM raw.products
+  tolerance_pct: 0
+- id: Q10
+  tag: dup_join
+  question: >-
+    Какая доля категории «Бытовая химия» в выручке сети за третий квартал 2026 года, в процентах?
+  check_sql: >-
+    SELECT 100.0 * sum(s.amount) FILTER (WHERE p.category = 'Бытовая химия') / sum(s.amount) FROM raw.sales s JOIN
+    (SELECT DISTINCT sku, category, brand FROM raw.products) p USING (sku) WHERE abs(s.qty) < 1000 AND s.sale_date
+    BETWEEN '2026-07-01' AND '2026-09-30'
+  trap_sql: >-
+    SELECT 100.0 * sum(s.amount) FILTER (WHERE p.category = 'Бытовая химия') / sum(s.amount) FROM raw.sales s JOIN
+    raw.products p USING (sku) WHERE abs(s.qty) < 1000 AND s.sale_date BETWEEN '2026-07-01' AND '2026-09-30'
+- id: Q11
+  tag: dup_join
+  question: Сколько единиц товара категории «Молочные продукты» продано в июле 2026 года?
+  check_sql: >-
+    SELECT sum(s.qty) FROM raw.sales s JOIN (SELECT DISTINCT sku, category, brand FROM raw.products) p USING (sku)
+    WHERE abs(s.qty) < 1000 AND p.category = 'Молочные продукты' AND s.sale_date BETWEEN '2026-07-01' AND '2026-07-31'
+  trap_sql: >-
+    SELECT sum(s.qty) FROM raw.sales s JOIN raw.products p USING (sku) WHERE abs(s.qty) < 1000 AND p.category =
+    'Молочные продукты' AND s.sale_date BETWEEN '2026-07-01' AND '2026-07-31'
+- id: Q12
+  tag: dup_join
+  question: Какая выручка категории «Снеки» в регионе «Север» за второе полугодие 2025 года, в рублях?
+  check_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN (SELECT DISTINCT sku, category, brand FROM raw.products) p USING
+    (sku) JOIN raw.stores st USING (store_id) WHERE abs(s.qty) < 1000 AND p.category = 'Снеки' AND st.region = 'Север'
+    AND s.sale_date BETWEEN '2025-07-01' AND '2025-12-31'
+  trap_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN raw.products p USING (sku) JOIN raw.stores st USING (store_id) WHERE
+    abs(s.qty) < 1000 AND p.category = 'Снеки' AND st.region = 'Север' AND s.sale_date BETWEEN '2025-07-01' AND
+    '2025-12-31'
+- id: Q13
+  tag: anomaly
+  question: >-
+    Какой магазин продал больше всего единиц товара в августе 2026 года? Ответ — номер магазина.
+  check_sql: >-
+    SELECT store_id FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-08-01' AND '2026-08-31' GROUP
+    BY store_id ORDER BY sum(qty) DESC LIMIT 1
+  trap_sql: >-
+    SELECT store_id FROM raw.sales WHERE sale_date BETWEEN '2026-08-01' AND '2026-08-31' GROUP BY store_id ORDER
+    BY sum(qty) DESC LIMIT 1
+  tolerance_pct: 0
+- id: Q14
+  tag: anomaly
+  question: Сколько единиц товара продала сеть в августе 2026 года?
+  check_sql: >-
+    SELECT sum(qty) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-08-01' AND '2026-08-31'
+  trap_sql: SELECT sum(qty) FROM raw.sales WHERE sale_date BETWEEN '2026-08-01' AND '2026-08-31'
+- id: Q15
+  tag: anomaly
+  question: Какая выручка сети за второй квартал 2025 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2025-04-01' AND '2025-06-30'
+  trap_sql: SELECT sum(amount) FROM raw.sales WHERE sale_date BETWEEN '2025-04-01' AND '2025-06-30'
+- id: Q16
+  tag: anomaly
+  question: Какая выручка магазина №2 за август 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND store_id = 2 AND sale_date BETWEEN '2026-08-01'
+    AND '2026-08-31'
+  trap_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE store_id = 2 AND sale_date BETWEEN '2026-08-01' AND '2026-08-31'
+- id: Q17
+  tag: anomaly
+  question: Какая средняя цена проданной единицы товара в сети в июне 2025 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) / sum(qty) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2025-06-01' AND '2025-06-30'
+  trap_sql: >-
+    SELECT sum(amount) / sum(qty) FROM raw.sales WHERE sale_date BETWEEN '2025-06-01' AND '2025-06-30'
+- id: Q18
+  tag: anomaly
+  question: >-
+    Какая максимальная выручка одного магазина за один день во втором квартале 2025 года, в рублях?
+  check_sql: >-
+    SELECT max(r) FROM (SELECT sale_date, store_id, sum(amount) AS r FROM raw.sales WHERE abs(qty) < 1000 AND sale_date
+    BETWEEN '2025-04-01' AND '2025-06-30' GROUP BY ALL)
+  trap_sql: >-
+    SELECT max(r) FROM (SELECT sale_date, store_id, sum(amount) AS r FROM raw.sales WHERE sale_date BETWEEN '2025-04-01'
+    AND '2025-06-30' GROUP BY ALL)
+- id: Q19
+  tag: open_month
+  question: Какая выручка сети за последний месяц, в рублях?
+  check_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND date_trunc('month', sale_date) = (SELECT max(date_trunc('month',
+    snapshot_date)) FROM raw.stock)
+  trap_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND date_trunc('month', sale_date) = (SELECT max(date_trunc('month',
+    sale_date)) FROM raw.sales)
+- id: Q20
+  tag: open_month
+  question: Какая среднемесячная выручка сети за последние шесть месяцев, в рублях?
+  check_sql: >-
+    WITH m AS (SELECT (SELECT max(date_trunc('month', snapshot_date)) FROM raw.stock) AS last) SELECT sum(amount)
+    / 6 FROM raw.sales, m WHERE abs(qty) < 1000 AND date_trunc('month', sale_date) BETWEEN m.last - INTERVAL 5 MONTH
+    AND m.last
+  trap_sql: >-
+    WITH m AS (SELECT (SELECT max(date_trunc('month', sale_date)) FROM raw.sales) AS last) SELECT sum(amount) /
+    6 FROM raw.sales, m WHERE abs(qty) < 1000 AND date_trunc('month', sale_date) BETWEEN m.last - INTERVAL 5 MONTH
+    AND m.last
+- id: Q21
+  tag: open_month
+  question: >-
+    На сколько процентов выручка сети за последний месяц выше или ниже, чем за предыдущий? Ответ — число процентов,
+    со знаком минус при падении.
+  check_sql: >-
+    WITH m AS (SELECT (SELECT max(date_trunc('month', snapshot_date)) FROM raw.stock) AS last) SELECT 100.0 * (sum(amount)
+    FILTER (WHERE date_trunc('month', sale_date) = m.last) / sum(amount) FILTER (WHERE date_trunc('month', sale_date)
+    = m.last - INTERVAL 1 MONTH) - 1) FROM raw.sales, m WHERE abs(qty) < 1000 GROUP BY m.last
+  trap_sql: >-
+    WITH m AS (SELECT (SELECT max(date_trunc('month', sale_date)) FROM raw.sales) AS last) SELECT 100.0 * (sum(amount)
+    FILTER (WHERE date_trunc('month', sale_date) = m.last) / sum(amount) FILTER (WHERE date_trunc('month', sale_date)
+    = m.last - INTERVAL 1 MONTH) - 1) FROM raw.sales, m WHERE abs(qty) < 1000 GROUP BY m.last
+- id: Q22
+  tag: open_month
+  question: Какой месяц 2026 года был для сети самым слабым по выручке? Ответ — номер месяца.
+  check_sql: >-
+    SELECT month(sale_date) FROM raw.sales WHERE abs(qty) < 1000 AND year(sale_date) = 2026 AND date_trunc('month',
+    sale_date) <= (SELECT max(date_trunc('month', snapshot_date)) FROM raw.stock) GROUP BY 1 ORDER BY sum(amount)
+    LIMIT 1
+  trap_sql: >-
+    SELECT month(sale_date) FROM raw.sales WHERE abs(qty) < 1000 AND year(sale_date) = 2026 GROUP BY 1 ORDER BY
+    sum(amount) LIMIT 1
+  tolerance_pct: 0
+- id: Q23
+  tag: open_month
+  question: Какая выручка магазинов региона «Восток» за последний месяц, в рублях?
+  check_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN raw.stores st USING (store_id) WHERE abs(s.qty) < 1000 AND st.region
+    = 'Восток' AND date_trunc('month', sale_date) = (SELECT max(date_trunc('month', snapshot_date)) FROM raw.stock)
+  trap_sql: >-
+    SELECT sum(s.amount) FROM raw.sales s JOIN raw.stores st USING (store_id) WHERE abs(s.qty) < 1000 AND st.region
+    = 'Восток' AND date_trunc('month', sale_date) = (SELECT max(date_trunc('month', sale_date)) FROM raw.sales)
+- id: Q24
+  tag: open_month
+  question: Сколько единиц товара категории «Заморозка» продано за последний месяц?
+  check_sql: >-
+    SELECT sum(s.qty) FROM raw.sales s JOIN (SELECT DISTINCT sku, category, brand FROM raw.products) p USING (sku)
+    WHERE abs(s.qty) < 1000 AND p.category = 'Заморозка' AND date_trunc('month', sale_date) = (SELECT max(date_trunc('month',
+    snapshot_date)) FROM raw.stock)
+  trap_sql: >-
+    SELECT sum(s.qty) FROM raw.sales s JOIN (SELECT DISTINCT sku, category, brand FROM raw.products) p USING (sku)
+    WHERE abs(s.qty) < 1000 AND p.category = 'Заморозка' AND date_trunc('month', sale_date) = (SELECT max(date_trunc('month',
+    sale_date)) FROM raw.sales)
+- id: Q25
+  tag: definition
+  question: Сколько единиц товара было на остатках сети на конец третьего квартала 2026 года?
+  check_sql: SELECT sum(qty_on_hand) FROM raw.stock WHERE snapshot_date = '2026-09-30'
+  trap_sql: >-
+    SELECT sum(qty_on_hand) FROM raw.stock WHERE snapshot_date BETWEEN '2026-07-01' AND '2026-09-30'
+- id: Q26
+  tag: definition
+  question: Какой средний остаток сети на конец месяца в первом полугодии 2026 года, в штуках?
+  check_sql: >-
+    SELECT sum(qty_on_hand) / 6.0 FROM raw.stock WHERE snapshot_date BETWEEN '2026-01-01' AND '2026-06-30'
+  trap_sql: >-
+    SELECT avg(qty_on_hand) FROM raw.stock WHERE snapshot_date BETWEEN '2026-01-01' AND '2026-06-30'
+- id: Q27
+  tag: definition
+  question: Сколько единиц товара было на остатках магазинов региона «Запад» на конец 2025 года?
+  check_sql: >-
+    SELECT sum(k.qty_on_hand) FROM raw.stock k JOIN raw.stores st USING (store_id) WHERE st.region = 'Запад' AND
+    k.snapshot_date = '2025-12-31'
+  trap_sql: >-
+    SELECT sum(k.qty_on_hand) FROM raw.stock k JOIN raw.stores st USING (store_id) WHERE st.region = 'Запад' AND
+    k.snapshot_date BETWEEN '2025-01-01' AND '2025-12-31'
+- id: Q28
+  tag: definition
+  question: Какие валовые продажи сети (без вычета возвратов) за сентябрь 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) FILTER (WHERE qty > 0) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01'
+    AND '2026-09-30'
+  trap_sql: >-
+    SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+- id: Q29
+  tag: definition
+  question: Какую долю валовых продаж составили возвраты в третьем квартале 2026 года, в процентах?
+  check_sql: >-
+    SELECT 100.0 * -sum(amount) FILTER (WHERE qty < 0) / sum(amount) FILTER (WHERE qty > 0) FROM raw.sales WHERE
+    abs(qty) < 1000 AND sale_date BETWEEN '2026-07-01' AND '2026-09-30'
+  trap_sql: >-
+    SELECT 100.0 * -sum(amount) FILTER (WHERE qty < 0) / sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date
+    BETWEEN '2026-07-01' AND '2026-09-30'
+- id: Q30
+  tag: definition
+  question: Какая средняя выручка одного магазина за сентябрь 2026 года, в рублях?
+  check_sql: >-
+    SELECT sum(amount) / count(DISTINCT store_id) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01'
+    AND '2026-09-30'
+  trap_sql: >-
+    SELECT avg(amount) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01' AND '2026-09-30'
