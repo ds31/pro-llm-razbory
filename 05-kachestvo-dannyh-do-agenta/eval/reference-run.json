@@ -1,0 +1,9380 @@
+{
+ "meta": {
+  "run_at": "2026-10-21 09:58",
+  "feed_seed": 46,
+  "random_first_seed": 1000,
+  "scenarios": 200,
+  "llm": "нет — ответы эталонными запросами слоя метрик 01",
+  "tolerance_pct": 0.5
+ },
+ "history": {
+  "accepted": 158334,
+  "dropped": 40,
+  "held": 0,
+  "by_rule": {
+   "R01": 40,
+   "R07": 10
+  }
+ },
+ "showcase": {
+  "clean": {
+   "name": "clean",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 8,
+     "wrong_at_close": [
+      "N2"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 8
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [],
+   "false_positives": {},
+   "clean_files": 552,
+   "clean_rows": 8891,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [],
+    "requests": [],
+    "warnings": []
+   }
+  },
+  "scanner": {
+   "name": "scanner",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 5260360.51,
+     "revenue_final": 5260360.51,
+     "error_pct": 16.49473451097156,
+     "rewritten": false,
+     "correct_at_close": 3,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "N1",
+      "N2"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 3
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "scanner",
+     "rule": "R01",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R01"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 551,
+   "clean_rows": 8880,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [
+     [
+      "продажи",
+      "R01",
+      "dropped",
+      "1"
+     ]
+    ],
+    "requests": [],
+    "warnings": []
+   }
+  },
+  "reload": {
+   "name": "reload",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4658534.97,
+     "revenue_final": 4658534.97,
+     "error_pct": 3.1668444602909673,
+     "rewritten": false,
+     "correct_at_close": 1,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 1
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4658534.97,
+     "revenue_final": 4658534.97,
+     "error_pct": 3.1668444602909673,
+     "rewritten": false,
+     "correct_at_close": 2,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N3"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "reload",
+     "rule": "R02",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R02"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 552,
+   "clean_rows": 8891,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [
+     [
+      "продажи",
+      "R02",
+      "dropped",
+      "137"
+     ]
+    ],
+    "requests": [],
+    "warnings": []
+   }
+  },
+  "missing": {
+   "name": "missing",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4502512.55,
+     "revenue_final": 4515535.0,
+     "error_pct": -0.28839218387190413,
+     "rewritten": true,
+     "correct_at_close": 5,
+     "wrong_at_close": [
+      "Q21",
+      "Q23",
+      "N1",
+      "N2"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 5
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4502512.55,
+     "revenue_final": 4515535.0,
+     "error_pct": -0.28839218387190413,
+     "rewritten": true,
+     "correct_at_close": 6,
+     "wrong_at_close": [
+      "Q21",
+      "Q23",
+      "N1"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "missing",
+     "rule": "C01",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 551,
+   "clean_rows": 8879,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [],
+    "requests": [],
+    "warnings": []
+   }
+  },
+  "kopecks": {
+   "name": "kopecks",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 5431205.8,
+     "revenue_final": 5431205.8,
+     "error_pct": 20.278235026414364,
+     "rewritten": false,
+     "correct_at_close": 2,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "N1",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 2
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 5431205.8,
+     "revenue_final": 5431205.8,
+     "error_pct": 20.278235026414364,
+     "rewritten": false,
+     "correct_at_close": 3,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "N1",
+      "N3"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "kopecks",
+     "rule": "R04",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01",
+      "R04"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 551,
+   "clean_rows": 8878,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [
+     [
+      "продажи",
+      "R04",
+      "replaced",
+      "13"
+     ]
+    ],
+    "requests": [
+     [
+      "2026-10-29",
+      "sales",
+      4,
+      "2026-10-28",
+      "R04"
+     ]
+    ],
+    "warnings": []
+   }
+  },
+  "negative_stock": {
+   "name": "negative_stock",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 8,
+     "wrong_at_close": [
+      "N2"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 8
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 8,
+     "wrong_at_close": [
+      "N2"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "negative_stock",
+     "rule": "R06",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R06"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 551,
+   "clean_rows": 8691,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [
+     [
+      "остатки",
+      "R06",
+      "replaced",
+      "15"
+     ]
+    ],
+    "requests": [
+     [
+      "2026-11-02",
+      "stock",
+      4,
+      "2026-10-31",
+      "R06"
+     ]
+    ],
+    "warnings": []
+   }
+  },
+  "future_date": {
+   "name": "future_date",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4500560.68,
+     "revenue_final": 4500560.68,
+     "error_pct": -0.33161784816196305,
+     "rewritten": false,
+     "correct_at_close": 5,
+     "wrong_at_close": [
+      "Q21",
+      "Q23",
+      "N1",
+      "N2"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 5
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4500560.68,
+     "revenue_final": 4500560.68,
+     "error_pct": -0.33161784816196305,
+     "rewritten": false,
+     "correct_at_close": 6,
+     "wrong_at_close": [
+      "Q21",
+      "Q23",
+      "N1"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "future_date",
+     "rule": "R03",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01",
+      "R03"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 551,
+   "clean_rows": 8878,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [
+     [
+      "продажи",
+      "R03",
+      "replaced",
+      "13"
+     ]
+    ],
+    "requests": [
+     [
+      "2026-10-30",
+      "sales",
+      4,
+      "2026-10-29",
+      "R03"
+     ]
+    ],
+    "warnings": []
+   }
+  },
+  "unknown_sku": {
+   "name": "unknown_sku",
+   "seed": 46,
+   "truth_revenue": 4531776.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4531776.0,
+     "error_pct": -0.35838046717225214,
+     "rewritten": true,
+     "correct_at_close": 6,
+     "wrong_at_close": [
+      "Q21",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 6
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4531776.0,
+     "error_pct": -0.35838046717225214,
+     "rewritten": true,
+     "correct_at_close": 7,
+     "wrong_at_close": [
+      "Q21",
+      "N3"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "revenue_at_close": 4531776.0,
+     "revenue_final": 4531776.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "unknown_sku",
+     "rule": "R05",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R05"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 507,
+   "clean_rows": 8332,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [
+     [
+      "продажи",
+      "R05",
+      "released",
+      "45"
+     ]
+    ],
+    "requests": [],
+    "warnings": []
+   }
+  },
+  "dup_card": {
+   "name": "dup_card",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4522454.22,
+     "revenue_final": 4522454.22,
+     "error_pct": 0.1532314554089325,
+     "rewritten": false,
+     "correct_at_close": 6,
+     "wrong_at_close": [
+      "Q21",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 6
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4515535.0,
+     "revenue_final": 4515535.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "dup_card",
+     "rule": "R07",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R07"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 552,
+   "clean_rows": 8891,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [],
+    "requests": [],
+    "warnings": [
+     [
+      "R07",
+      "1"
+     ]
+    ]
+   }
+  },
+  "truncated": {
+   "name": "truncated",
+   "seed": 46,
+   "truth_revenue": 4515535.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 4475416.49,
+     "revenue_final": 4475416.49,
+     "error_pct": -0.8884552993166873,
+     "rewritten": false,
+     "correct_at_close": 2,
+     "wrong_at_close": [
+      "Q19",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 2
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4475416.49,
+     "revenue_final": 4475416.49,
+     "error_pct": -0.8884552993166873,
+     "rewritten": false,
+     "correct_at_close": 3,
+     "wrong_at_close": [
+      "Q19",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N3"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 4475416.49,
+     "revenue_final": 4475416.49,
+     "error_pct": -0.8884552993166873,
+     "rewritten": false,
+     "correct_at_close": 3,
+     "wrong_at_close": [
+      "Q19",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N3"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "truncated",
+     "rule": "R08",
+     "caught": false,
+     "caught_any": false,
+     "rules": []
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 543,
+   "clean_rows": 8767,
+   "timeline": [],
+   "gate_log": {
+    "quarantine": [],
+    "requests": [],
+    "warnings": []
+   }
+  },
+  "all": {
+   "name": "all",
+   "seed": 46,
+   "truth_revenue": 4531776.0,
+   "modes": {
+    "raw": {
+     "close_day": "2026-11-01",
+     "revenue_at_close": 9518831.61,
+     "revenue_final": 9547499.06,
+     "error_pct": 110.04638380184721,
+     "rewritten": true,
+     "correct_at_close": 1,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-10",
+     "correct_on_nov1": 1
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "revenue_at_close": 5546209.0,
+     "revenue_final": 5574876.45,
+     "error_pct": 22.38488839695519,
+     "rewritten": true,
+     "correct_at_close": 1,
+     "wrong_at_close": [
+      "Q19",
+      "Q20",
+      "Q21",
+      "Q23",
+      "Q24",
+      "N1",
+      "N2",
+      "N3"
+     ],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "revenue_at_close": 4531776.0,
+     "revenue_final": 4531776.0,
+     "error_pct": 0.0,
+     "rewritten": false,
+     "correct_at_close": 9,
+     "wrong_at_close": [],
+     "month_on_nov1": "2026-09",
+     "correct_on_nov1": 9
+    }
+   },
+   "detection": [
+    {
+     "defect": "unknown_sku",
+     "rule": "R05",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01",
+      "R03",
+      "R05"
+     ]
+    },
+    {
+     "defect": "scanner",
+     "rule": "R01",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R01"
+     ]
+    },
+    {
+     "defect": "kopecks",
+     "rule": "R04",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01",
+      "R04"
+     ]
+    },
+    {
+     "defect": "future_date",
+     "rule": "R03",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01",
+      "R03",
+      "R05"
+     ]
+    },
+    {
+     "defect": "missing",
+     "rule": "C01",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01"
+     ]
+    },
+    {
+     "defect": "negative_stock",
+     "rule": "R06",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "C01",
+      "R06"
+     ]
+    },
+    {
+     "defect": "dup_card",
+     "rule": "R07",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R07"
+     ]
+    },
+    {
+     "defect": "reload",
+     "rule": "R02",
+     "caught": true,
+     "caught_any": true,
+     "rules": [
+      "R02"
+     ]
+    }
+   ],
+   "false_positives": {},
+   "clean_files": 503,
+   "clean_rows": 8096,
+   "timeline": [
+    {
+     "day": "2026-10-01",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 0,
+      "accepted": 0,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R01": 40,
+       "R07": 10
+      },
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-02",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 157,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-03",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 144,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-04",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 144,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-05",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 133,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-06",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 147,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-07",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 139,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-08",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 151,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-09",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 139,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-10",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 147,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-11",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 160,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-12",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 148,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-13",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 141,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-14",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 154,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-15",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 13,
+      "accepted": 140,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 1,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R07": 1
+      },
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-16",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 137,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-17",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 153,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-18",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 132,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-19",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 135,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-20",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 145,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-21",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 142,
+      "held": 0,
+      "dropped": 1,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R01": 1
+      },
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-22",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 137,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-23",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 148,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-24",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 24,
+      "accepted": 152,
+      "held": 0,
+      "dropped": 137,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R02": 137
+      },
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-25",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 135,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-10-26",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 139,
+      "held": 6,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R05": 6
+      },
+      "missing": [],
+      "held_total": 6
+     }
+    },
+    {
+     "day": "2026-10-27",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 143,
+      "held": 7,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R05": 7
+      },
+      "missing": [],
+      "held_total": 13
+     }
+    },
+    {
+     "day": "2026-10-28",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 166,
+      "held": 5,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R05": 5
+      },
+      "missing": [],
+      "held_total": 18
+     }
+    },
+    {
+     "day": "2026-10-29",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 133,
+      "held": 19,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [
+       "sales · магазин 4 · 28.10"
+      ],
+      "closures": [],
+      "violations": {
+       "R04": 13,
+       "R05": 6
+      },
+      "missing": [
+       "магазин 4 · 28.10"
+      ],
+      "held_total": 37
+     }
+    },
+    {
+     "day": "2026-10-30",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 137,
+      "held": 21,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [
+       "sales · магазин 4 · 29.10"
+      ],
+      "closures": [],
+      "violations": {
+       "R03": 14,
+       "R05": 8
+      },
+      "missing": [
+       "магазин 4 · 28.10",
+       "магазин 4 · 29.10"
+      ],
+      "held_total": 58
+     }
+    },
+    {
+     "day": "2026-10-31",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 13,
+      "accepted": 148,
+      "held": 5,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {
+       "R05": 5
+      },
+      "missing": [
+       "магазин 4 · 29.10"
+      ],
+      "held_total": 50
+     }
+    },
+    {
+     "day": "2026-11-01",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9518831.61
+      },
+      "rules01": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 151,
+      "held": 9,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [
+       "2026-10 на 01.11: не закрыт (K1 да · K2 нет · K3 нет · K4 нет)"
+      ],
+      "violations": {
+       "R05": 9
+      },
+      "missing": [
+       "магазин 4 · 31.10"
+      ],
+      "held_total": 45
+     }
+    },
+    {
+     "day": "2026-11-02",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9518831.61
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5546209.0
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 24,
+      "accepted": 2526,
+      "held": 15,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [
+       "stock · магазин 4 · 31.10"
+      ],
+      "closures": [
+       "2026-10 на 02.11: не закрыт (K1 да · K2 нет · K3 да · K4 нет)"
+      ],
+      "violations": {
+       "R06": 15
+      },
+      "missing": [
+       "магазин 4 · 31.10"
+      ],
+      "held_total": 60
+     }
+    },
+    {
+     "day": "2026-11-03",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9534476.61
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5561854.0
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 13,
+      "accepted": 151,
+      "held": 0,
+      "dropped": 0,
+      "released": 45,
+      "warnings": 0,
+      "requests": [],
+      "closures": [
+       "2026-10 на 03.11: не закрыт (K1 да · K2 нет · K3 да · K4 нет)"
+      ],
+      "violations": {},
+      "missing": [
+       "магазин 4 · 31.10"
+      ],
+      "held_total": 15
+     }
+    },
+    {
+     "day": "2026-11-04",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9534476.61
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5561854.0
+      },
+      "gate": {
+       "closed_through": "2026-09-30",
+       "oct_revenue": null
+      }
+     },
+     "gate": {
+      "loads": 13,
+      "accepted": 324,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [
+       "2026-10 на 04.11: не закрыт (K1 да · K2 нет · K3 да · K4 да)"
+      ],
+      "violations": {},
+      "missing": [
+       "магазин 4 · 31.10"
+      ],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-05",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 13,
+      "accepted": 166,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [
+       "2026-10 на 05.11: закрыт (K1 да · K2 да · K3 да · K4 да)"
+      ],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-06",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 149,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-07",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 138,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-08",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 140,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-09",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 148,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-10",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 146,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-11",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 141,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-12",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 134,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-13",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 132,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-14",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 155,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    },
+    {
+     "day": "2026-11-15",
+     "modes": {
+      "raw": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 9547499.06
+      },
+      "rules01": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 5574876.45
+      },
+      "gate": {
+       "closed_through": "2026-10-31",
+       "oct_revenue": 4531776.0
+      }
+     },
+     "gate": {
+      "loads": 12,
+      "accepted": 149,
+      "held": 0,
+      "dropped": 0,
+      "released": 0,
+      "warnings": 0,
+      "requests": [],
+      "closures": [],
+      "violations": {},
+      "missing": [],
+      "held_total": 0
+     }
+    }
+   ],
+   "gate_log": {
+    "quarantine": [
+     [
+      "остатки",
+      "R06",
+      "replaced",
+      "15"
+     ],
+     [
+      "продажи",
+      "R01",
+      "dropped",
+      "1"
+     ],
+     [
+      "продажи",
+      "R02",
+      "dropped",
+      "137"
+     ],
+     [
+      "продажи",
+      "R03",
+      "replaced",
+      "13"
+     ],
+     [
+      "продажи",
+      "R03,R05",
+      "replaced",
+      "1"
+     ],
+     [
+      "продажи",
+      "R04",
+      "replaced",
+      "13"
+     ],
+     [
+      "продажи",
+      "R05",
+      "released",
+      "45"
+     ]
+    ],
+    "requests": [
+     [
+      "2026-10-29",
+      "sales",
+      4,
+      "2026-10-28",
+      "R04"
+     ],
+     [
+      "2026-10-30",
+      "sales",
+      4,
+      "2026-10-29",
+      "R03"
+     ],
+     [
+      "2026-11-02",
+      "stock",
+      4,
+      "2026-10-31",
+      "R06"
+     ]
+    ],
+    "warnings": [
+     [
+      "R07",
+      "1"
+     ]
+    ]
+   }
+  }
+ },
+ "random": {
+  "summary": {
+   "scenarios": 200,
+   "defects": 910,
+   "by_defect": {
+    "truncated": {
+     "n": 106,
+     "caught": 32,
+     "caught_any": 33
+    },
+    "unknown_sku": {
+     "n": 105,
+     "caught": 105,
+     "caught_any": 105
+    },
+    "scanner": {
+     "n": 96,
+     "caught": 96,
+     "caught_any": 96
+    },
+    "kopecks": {
+     "n": 97,
+     "caught": 97,
+     "caught_any": 97
+    },
+    "missing": {
+     "n": 95,
+     "caught": 95,
+     "caught_any": 95
+    },
+    "reload": {
+     "n": 108,
+     "caught": 108,
+     "caught_any": 108
+    },
+    "negative_stock": {
+     "n": 110,
+     "caught": 110,
+     "caught_any": 110
+    },
+    "dup_card": {
+     "n": 97,
+     "caught": 97,
+     "caught_any": 97
+    },
+    "future_date": {
+     "n": 96,
+     "caught": 96,
+     "caught_any": 96
+    }
+   },
+   "caught_loud_pct": 100.0,
+   "false_positives": {},
+   "clean_files": 103272,
+   "clean_rows": 1670261,
+   "modes": {
+    "raw": {
+     "scenarios": 200,
+     "declared_wrong_loud_only": 94,
+     "revenue_wrong_loud_only": 80,
+     "scenarios_loud_only": 94,
+     "declared_wrong_with_silent": 106,
+     "scenarios_with_silent": 106,
+     "closed_by_sim_end": 200,
+     "declared_wrong": 176,
+     "declared_wrong_pct": 88.0,
+     "rewritten": 20,
+     "all9_correct_at_close": 0,
+     "median_abs_error_pct": 31.343,
+     "close_day_hist": {
+      "2026-11-01": 200
+     },
+     "close_day_median": "2026-11-01",
+     "close_day_p90": "2026-11-01",
+     "close_day_max": "2026-11-01"
+    },
+    "rules01": {
+     "scenarios": 200,
+     "declared_wrong_loud_only": 90,
+     "revenue_wrong_loud_only": 58,
+     "scenarios_loud_only": 94,
+     "declared_wrong_with_silent": 106,
+     "scenarios_with_silent": 106,
+     "closed_by_sim_end": 200,
+     "declared_wrong": 140,
+     "declared_wrong_pct": 70.0,
+     "rewritten": 12,
+     "all9_correct_at_close": 4,
+     "median_abs_error_pct": 3.34,
+     "close_day_hist": {
+      "2026-11-02": 200
+     },
+     "close_day_median": "2026-11-02",
+     "close_day_p90": "2026-11-02",
+     "close_day_max": "2026-11-02"
+    },
+    "gate": {
+     "scenarios": 200,
+     "declared_wrong_loud_only": 0,
+     "revenue_wrong_loud_only": 0,
+     "scenarios_loud_only": 94,
+     "declared_wrong_with_silent": 102,
+     "scenarios_with_silent": 106,
+     "closed_by_sim_end": 200,
+     "declared_wrong": 45,
+     "declared_wrong_pct": 22.5,
+     "rewritten": 0,
+     "all9_correct_at_close": 98,
+     "median_abs_error_pct": 0.047,
+     "close_day_hist": {
+      "2026-11-02": 83,
+      "2026-11-03": 44,
+      "2026-11-04": 35,
+      "2026-11-05": 35,
+      "2026-11-06": 2,
+      "2026-11-07": 1
+     },
+     "close_day_median": "2026-11-03",
+     "close_day_p90": "2026-11-05",
+     "close_day_max": "2026-11-07"
+    }
+   }
+  },
+  "scenarios": [
+   {
+    "seed": 1000,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 178.233,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 26.48,
+     "correct_at_close": 5,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.24,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1001,
+    "defects": [
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 28.455,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 28.455,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1002,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 38.463,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 37.778,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.594,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1003,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "future_date",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 35.834,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 35.322,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -1.525,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1004,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 68.18,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 12.818,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.259,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1005,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.01,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.861,
+     "correct_at_close": 5,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-07",
+     "error_pct": -0.16,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1006,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 113.777,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 27.193,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.128,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1007,
+    "defects": [
+     "future_date",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.201,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.201,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1008,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 27.594,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.765,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.136,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1009,
+    "defects": [
+     "truncated",
+     "scanner",
+     "future_date",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 13.662,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.265,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.138,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1010,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 24.637,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 24.75,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.271,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1011,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 224.036,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 47.552,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1012,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 17.971,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 17.971,
+     "correct_at_close": 5,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.319,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1013,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 49.61,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 19.087,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.541,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1014,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 192.326,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 27.596,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1015,
+    "defects": [
+     "truncated",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.714,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.536,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.536,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1016,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.301,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.148,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1017,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 218.884,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.143,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.735,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1018,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.085,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.304,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1019,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 117.707,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 20.853,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1020,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 66.067,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1021,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 6.698,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 6.259,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.609,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1022,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "future_date"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 120.845,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.465,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1023,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 81.703,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.88,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.043,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1024,
+    "defects": [
+     "unknown_sku",
+     "missing",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 1.148,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1025,
+    "defects": [
+     "truncated",
+     "scanner",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 29.704,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.213,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.019,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1026,
+    "defects": [
+     "kopecks",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 25.605,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.189,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1027,
+    "defects": [
+     "truncated",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.242,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.242,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1028,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 31.478,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 31.478,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -1.014,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1029,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -1.051,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.751,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.447,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1030,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "missing"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.378,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.378,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1031,
+    "defects": [
+     "scanner",
+     "future_date",
+     "missing"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 122.179,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.15,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1032,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 2.277,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 1.836,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.94,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1033,
+    "defects": [
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 183.023,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.253,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1034,
+    "defects": [
+     "truncated",
+     "scanner",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 276.232,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.707,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.052,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1035,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 84.752,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 23.283,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1036,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 72.859,
+     "correct_at_close": 2,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 36.062,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-06",
+     "error_pct": -0.229,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1037,
+    "defects": [
+     "truncated",
+     "future_date",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.274,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.35,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1038,
+    "defects": [
+     "truncated",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 1.837,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 1.837,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -1.475,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1039,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 140.109,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.962,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1040,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "missing"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 28.341,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 28.341,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.123,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1041,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 31.566,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 13.345,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1042,
+    "defects": [
+     "truncated",
+     "scanner",
+     "future_date",
+     "missing"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 185.788,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.424,
+     "correct_at_close": 5,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -1.047,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1043,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 2.724,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 1.803,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.001,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1044,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -1.195,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.266,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.945,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1045,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 20.653,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 20.14,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1046,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 3.123,
+     "correct_at_close": 1,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.854,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-06",
+     "error_pct": -0.146,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1047,
+    "defects": [
+     "unknown_sku",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.0,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1048,
+    "defects": [
+     "scanner",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 58.745,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.318,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1049,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 137.768,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 44.306,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1050,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "missing",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 141.75,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.262,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1051,
+    "defects": [
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 39.155,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 39.155,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1052,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 27.832,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 27.832,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.795,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1053,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.287,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.265,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.257,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1054,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 281.636,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.773,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.773,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1055,
+    "defects": [
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 3.025,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.025,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1056,
+    "defects": [
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.035,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.035,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1057,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.606,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.606,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.627,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1058,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 220.963,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 20.871,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1059,
+    "defects": [
+     "truncated",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.623,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.224,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.064,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1060,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 122.472,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 26.061,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1061,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 27.151,
+     "correct_at_close": 1,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 26.777,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1062,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 14.14,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 14.14,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1063,
+    "defects": [
+     "unknown_sku",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.484,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1064,
+    "defects": [
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 12.295,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.141,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1065,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 16.612,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 16.612,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1066,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 15.787,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 15.255,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -1.637,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1067,
+    "defects": [
+     "unknown_sku",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 3.219,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.219,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1068,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 35.286,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 34.436,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.335,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1069,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 64.196,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1070,
+    "defects": [
+     "scanner",
+     "future_date",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 59.77,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.085,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1071,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.572,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.567,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.567,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1072,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 63.355,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 22.978,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1073,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 135.766,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.404,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.044,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1074,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 13.792,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.317,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.403,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1075,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 274.815,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 16.357,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.228,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1076,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 152.859,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.839,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1077,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "missing"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 31.408,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 31.408,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1078,
+    "defects": [
+     "kopecks",
+     "missing",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 13.94,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 13.098,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1079,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 54.895,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 36.844,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1080,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 95.957,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 36.06,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.699,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1081,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 27.516,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 27.212,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.328,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1082,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "future_date"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 94.766,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.55,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.169,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1083,
+    "defects": [
+     "unknown_sku",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.266,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1084,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.021,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.162,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.162,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1085,
+    "defects": [
+     "truncated",
+     "scanner",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 116.644,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.234,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.054,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1086,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.176,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.096,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1087,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 166.393,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 29.082,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1088,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.892,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.345,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1089,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 32.576,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 31.792,
+     "correct_at_close": 5,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1090,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 242.154,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.654,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.317,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1091,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 182.891,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.629,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -1.523,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1092,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 13.751,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 13.751,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.079,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1093,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 59.262,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 29.654,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1094,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 236.785,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.481,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1095,
+    "defects": [
+     "kopecks",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 71.375,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 70.869,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1096,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 143.119,
+     "correct_at_close": 2,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 34.642,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1097,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 104.196,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1098,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.379,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.651,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.651,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1099,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 21.798,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.395,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.061,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1100,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "missing"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 166.317,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 23.731,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1101,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 2.517,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.019,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.001,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1102,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 27.388,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 27.388,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1103,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 139.682,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.268,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.306,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1104,
+    "defects": [
+     "scanner",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 128.814,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.619,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1105,
+    "defects": [
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.617,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.422,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1106,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 89.727,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 34.261,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.209,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1107,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.902,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.302,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1108,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 20.734,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 20.734,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -1.031,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1109,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 15.001,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.362,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1110,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 343.597,
+     "correct_at_close": 1,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 28.015,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.08,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1111,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 32.048,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 31.677,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1112,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 16.749,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.882,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1113,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 101.651,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 12.621,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.131,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1114,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.089,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.263,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.134,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1115,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 196.629,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 23.379,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1116,
+    "defects": [
+     "truncated",
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 122.194,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.339,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.362,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1117,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 198.375,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 32.943,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.047,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1118,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 154.02,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.671,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.337,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1119,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 56.008,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.108,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.108,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1120,
+    "defects": [
+     "truncated",
+     "scanner",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 126.506,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.864,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.864,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1121,
+    "defects": [
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 38.466,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.148,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1122,
+    "defects": [
+     "scanner",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 209.517,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.008,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1123,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 149.981,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.849,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.849,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1124,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.174,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.174,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1125,
+    "defects": [
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 149.917,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.303,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1126,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 44.858,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 24.652,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1127,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 39.992,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 24.213,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1128,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "missing"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 41.248,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 41.248,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.159,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1129,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 59.012,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 19.075,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.325,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1130,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 14.665,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 13.579,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1131,
+    "defects": [
+     "truncated",
+     "scanner",
+     "missing"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 22.194,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.102,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.102,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1132,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.315,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.315,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1133,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 32.712,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 32.459,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.397,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1134,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 15.168,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 15.168,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1135,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 12.813,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 12.813,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -1.435,
+     "correct_at_close": 4,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1136,
+    "defects": [
+     "scanner",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 148.745,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1137,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 21.765,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.765,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -1.296,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1138,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 35.357,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 35.357,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.844,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1139,
+    "defects": [
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.603,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.38,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1140,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 14.212,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 14.212,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.647,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1141,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 55.333,
+     "correct_at_close": 1,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 16.827,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1142,
+    "defects": [
+     "kopecks",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 13.195,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 13.195,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1143,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 2.798,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.798,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1144,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 32.866,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.304,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1145,
+    "defects": [
+     "future_date",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 3.542,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.426,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1146,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 22.168,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.879,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1147,
+    "defects": [
+     "truncated",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -1.509,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.988,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -1.988,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1148,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 25.178,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 25.178,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.762,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1149,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "future_date"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 31.278,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 31.278,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.412,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1150,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 50.138,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.831,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1151,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 27.225,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 26.152,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.504,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1152,
+    "defects": [
+     "scanner",
+     "future_date",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 224.241,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.29,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1153,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.058,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.208,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.208,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1154,
+    "defects": [
+     "unknown_sku",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.206,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.206,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1155,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 2.975,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.975,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.05,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1156,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "future_date"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 24.328,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 24.328,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1157,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 168.388,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 18.078,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.878,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1158,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 21.891,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.891,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.191,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1159,
+    "defects": [
+     "unknown_sku",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.908,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.231,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1160,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 16.225,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 15.652,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.371,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1161,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 163.358,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 17.433,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1162,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 103.344,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 14.8,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.218,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1163,
+    "defects": [
+     "future_date",
+     "missing",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.453,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.18,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1164,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 170.227,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 19.248,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1165,
+    "defects": [
+     "truncated",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.345,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.345,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.163,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1166,
+    "defects": [
+     "truncated",
+     "scanner",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 104.69,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.104,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.104,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1167,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 1.051,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.882,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -2.036,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1168,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 31.075,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 31.075,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.402,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1169,
+    "defects": [
+     "truncated",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.566,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.566,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.814,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1170,
+    "defects": [
+     "truncated",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 3.531,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.531,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.201,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1171,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 97.707,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.434,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.796,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1172,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 188.089,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.077,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.238,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1173,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 2.417,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.268,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.798,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1174,
+    "defects": [
+     "unknown_sku",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.242,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.379,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1175,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 85.636,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 21.911,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1176,
+    "defects": [
+     "scanner",
+     "missing",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 82.159,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.269,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1177,
+    "defects": [
+     "truncated",
+     "scanner",
+     "kopecks",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 88.968,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 19.386,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.9,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1178,
+    "defects": [
+     "kopecks",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 22.773,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 22.512,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1179,
+    "defects": [
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 36.5,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 36.5,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1180,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "missing",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 98.124,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 23.83,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.326,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1181,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "missing",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 1.23,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 1.23,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -1.364,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1182,
+    "defects": [
+     "scanner",
+     "missing",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 170.223,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 3.107,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1183,
+    "defects": [
+     "scanner",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 29.33,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.179,
+     "correct_at_close": 8,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1184,
+    "defects": [
+     "scanner",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 12.839,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1185,
+    "defects": [
+     "unknown_sku",
+     "scanner",
+     "kopecks",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 56.449,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 12.469,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1186,
+    "defects": [
+     "truncated",
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 122.482,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.825,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-04",
+     "error_pct": -0.851,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1187,
+    "defects": [
+     "scanner",
+     "kopecks",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 235.311,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 17.83,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1188,
+    "defects": [
+     "unknown_sku",
+     "kopecks",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 23.72,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 22.816,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": 0.0,
+     "correct_at_close": 9,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1189,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 18.007,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 18.007,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.226,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1190,
+    "defects": [
+     "truncated",
+     "scanner",
+     "future_date",
+     "missing",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 137.681,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.247,
+     "correct_at_close": 7,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.055,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1191,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 192.888,
+     "correct_at_close": 2,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.48,
+     "correct_at_close": 6,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.25,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1192,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "future_date",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 11.05,
+     "correct_at_close": 2,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 11.05,
+     "correct_at_close": 3,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.426,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1193,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "future_date",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": -0.676,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.774,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.162,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1194,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 37.575,
+     "correct_at_close": 1,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 2.899,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.894,
+     "correct_at_close": 5,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1195,
+    "defects": [
+     "truncated",
+     "scanner",
+     "negative_stock",
+     "dup_card",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 83.404,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.085,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-05",
+     "error_pct": -0.317,
+     "correct_at_close": 7,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1196,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "negative_stock",
+     "dup_card"
+    ],
+    "caught": [
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 0.303,
+     "correct_at_close": 3,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.453,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.453,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1197,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "scanner",
+     "reload"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 88.897,
+     "correct_at_close": 4,
+     "rewritten": true
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.192,
+     "correct_at_close": 8,
+     "rewritten": true
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.192,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1198,
+    "defects": [
+     "truncated",
+     "unknown_sku",
+     "kopecks",
+     "missing",
+     "negative_stock"
+    ],
+    "caught": [
+     false,
+     true,
+     true,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 35.246,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 35.246,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-03",
+     "error_pct": -0.5,
+     "correct_at_close": 6,
+     "rewritten": false
+    }
+   },
+   {
+    "seed": 1199,
+    "defects": [
+     "truncated",
+     "kopecks",
+     "dup_card"
+    ],
+    "caught": [
+     false,
+     true,
+     true
+    ],
+    "raw": {
+     "close_day": "2026-11-01",
+     "error_pct": 8.693,
+     "correct_at_close": 4,
+     "rewritten": false
+    },
+    "rules01": {
+     "close_day": "2026-11-02",
+     "error_pct": 8.554,
+     "correct_at_close": 5,
+     "rewritten": false
+    },
+    "gate": {
+     "close_day": "2026-11-02",
+     "error_pct": -0.275,
+     "correct_at_close": 8,
+     "rewritten": false
+    }
+   }
+  ]
+ }
+}

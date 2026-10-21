@@ -1,0 +1,639 @@
+{
+ "meta": {
+  "as_of": "2026-11-03",
+  "scenario": "all",
+  "model": "anthropic/claude-sonnet-5.5",
+  "price_usd_per_mtok": [
+   2.0,
+   10.0
+  ]
+ },
+ "gate_closed_through": "2026-09-30",
+ "summary": {
+  "calendar": {
+   "n": 7,
+   "correct": 4,
+   "cost_usd": 0.1116
+  },
+  "gates": {
+   "n": 7,
+   "correct": 7,
+   "cost_usd": 0.1122
+  }
+ },
+ "answers": [
+  {
+   "setup": "calendar",
+   "qid": "Q19",
+   "question": "Какая выручка сети за последний месяц, в рублях?",
+   "closed_through": "2026-10-31",
+   "expected": 4531776.0,
+   "got": 4518753.55,
+   "correct": true,
+   "explanation": "Чистая выручка (продажи минус возвраты) за октябрь 2026 — последний закрытый месяц по closed_through 2026-10-31. Посчитана метрикой revenue.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01526,
+   "seconds": 5.4,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-10-01",
+      "date_to": "2026-10-31"
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ?\", \"params\": [\"2026-10-01\", \"2026-10-31\"], \"rows\": [{\"value\": 4518753.55}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 4518753.55,
+      "unit": "₽",
+      "explanation": "Чистая выручка (продажи минус возвраты) за октябрь 2026 — последний закрытый месяц по closed_through 2026-10-31. Посчитана метрикой revenue.",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "calendar",
+   "qid": "Q21",
+   "question": "На сколько процентов выручка сети за последний месяц выше или ниже, чем за предыдущий? Ответ — число процентов, со знаком минус при падении.",
+   "closed_through": "2026-10-31",
+   "expected": 8.835435080205345,
+   "got": 8.5227,
+   "correct": false,
+   "explanation": "Выручка за октябрь 2026 (последний закрытый месяц) равна 4 518 753,55 ₽. За сентябрь она равна 4 163 879,16 ₽. Рост составил (4518753,55 / 4163879,16 − 1) × 100 ≈ 8,5227%. Данные взяты из метрики revenue.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01784,
+   "seconds": 6.1,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-09-01",
+      "date_to": "2026-10-31",
+      "group_by": [
+       "month"
+      ]
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT month, sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? GROUP BY month ORDER BY month\", \"params\": [\"2026-09-01\", \"2026-10-31\"], \"rows\": [{\"month\": \"2026-09-01\", \"value\": 4163879.16}, {\"month\": \"2026-10-01\", \"value\": 4518753.55}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 8.5227,
+      "unit": "%",
+      "explanation": "Выручка за октябрь 2026 (последний закрытый месяц) равна 4 518 753,55 ₽. За сентябрь она равна 4 163 879,16 ₽. Рост составил (4518753,55 / 4163879,16 − 1) × 100 ≈ 8,5227%. Данные взяты из метрики revenue.",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "calendar",
+   "qid": "Q23",
+   "question": "Какая выручка магазинов региона «Восток» за последний месяц, в рублях?",
+   "closed_through": "2026-10-31",
+   "expected": 1203082.23,
+   "got": 1190059.78,
+   "correct": false,
+   "explanation": "Метрика revenue (чистая выручка) за последний закрытый месяц — октябрь 2026 (01.10–31.10), фильтр region = «Восток».",
+   "metric_id": "revenue",
+   "cost_usd": 0.01646,
+   "seconds": 4.7,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "describe_metric",
+     "input": {
+      "metric_id": "revenue"
+     },
+     "output": "{\"id\": \"revenue\", \"label\": \"Выручка, ₽\", \"description\": \"Чистая выручка — продажи минус возвраты, без строк-ошибок.\", \"table\": \"mart.sales_daily\", \"expr\": \"sum(net_amount)\", \"time_rule\": \"range\", \"dimensions\": [\"store_id\", \"region\", \"category\", \"brand\", \"month\"], \"synonyms\": [\"выручка\", \"оборот\", \"продажи в рублях\", \"чистые продажи\"]}"
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-10-01",
+      "date_to": "2026-10-31",
+      "filters": {
+       "region": [
+        "Восток"
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND region IN (?)\", \"params\": [\"2026-10-01\", \"2026-10-31\", \"Восток\"], \"rows\": [{\"value\": 1190059.78}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 1190059.78,
+      "unit": "₽",
+      "explanation": "Метрика revenue (чистая выручка) за последний закрытый месяц — октябрь 2026 (01.10–31.10), фильтр region = «Восток».",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "calendar",
+   "qid": "Q24",
+   "question": "Сколько единиц товара категории «Заморозка» продано за последний месяц?",
+   "closed_through": "2026-10-31",
+   "expected": 3023.0,
+   "got": 3018.0,
+   "correct": true,
+   "explanation": "Метрика units за октябрь 2026 (последний закрытый месяц, данные закрыты по 2026-10-31) с фильтром категории «Заморозка»; возвраты вычтены.",
+   "metric_id": "units",
+   "cost_usd": 0.0155,
+   "seconds": 4.4,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "units",
+      "date_from": "2026-10-01",
+      "date_to": "2026-10-31",
+      "filters": {
+       "category": [
+        "Заморозка"
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"units\", \"sql\": \"SELECT sum(net_qty) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND category IN (?)\", \"params\": [\"2026-10-01\", \"2026-10-31\", \"Заморозка\"], \"rows\": [{\"value\": 3018}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 3018,
+      "unit": "шт.",
+      "metric_id": "units",
+      "explanation": "Метрика units за октябрь 2026 (последний закрытый месяц, данные закрыты по 2026-10-31) с фильтром категории «Заморозка»; возвраты вычтены."
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "calendar",
+   "qid": "N1",
+   "question": "Какая выручка магазина №4 за последний месяц, в рублях?",
+   "closed_through": "2026-10-31",
+   "expected": 389765.14,
+   "got": 376742.69,
+   "correct": false,
+   "explanation": "Чистая выручка магазина №4 за октябрь 2026 (последний закрытый месяц по closed_through 2026-10-31), метрика revenue.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01556,
+   "seconds": 4.5,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-10-01",
+      "date_to": "2026-10-31",
+      "filters": {
+       "store_id": [
+        4
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND store_id IN (?)\", \"params\": [\"2026-10-01\", \"2026-10-31\", \"4\"], \"rows\": [{\"value\": 376742.69}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 376742.69,
+      "unit": "₽",
+      "explanation": "Чистая выручка магазина №4 за октябрь 2026 (последний закрытый месяц по closed_through 2026-10-31), метрика revenue.",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "calendar",
+   "qid": "N2",
+   "question": "Сколько единиц товара на остатках сети на конец последнего месяца?",
+   "closed_through": "2026-10-31",
+   "expected": 71781.0,
+   "got": 71433.0,
+   "correct": true,
+   "explanation": "Метрика stock_end_units за октябрь 2026 (последний закрытый месяц): сумма остатков по сети на последнюю дату конца месяца.",
+   "metric_id": "stock_end_units",
+   "cost_usd": 0.01536,
+   "seconds": 4.4,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "stock_end_units",
+      "date_from": "2026-10-01",
+      "date_to": "2026-10-31"
+     },
+     "output": "{\"metric_id\": \"stock_end_units\", \"sql\": \"SELECT sum(qty_on_hand) AS value FROM mart.stock_month_end WHERE month_end BETWEEN ? AND ? AND month_end = (SELECT max(month_end) FROM mart.stock_month_end WHERE month_end BETWEEN ? AND ?)\", \"params\": [\"2026-10-01\", \"2026-10-31\", \"2026-10-01\", \"2026-10-31\"], \"rows\": [{\"value\": 71433}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 71433,
+      "unit": "шт.",
+      "explanation": "Метрика stock_end_units за октябрь 2026 (последний закрытый месяц): сумма остатков по сети на последнюю дату конца месяца.",
+      "metric_id": "stock_end_units"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "calendar",
+   "qid": "N3",
+   "question": "Какая выручка категории «Напитки» за последний месяц, в рублях?",
+   "closed_through": "2026-10-31",
+   "expected": 540576.61,
+   "got": 539157.31,
+   "correct": true,
+   "explanation": "Чистая выручка (продажи минус возвраты) по категории «Напитки» за октябрь 2026. Это последний закрытый месяц: данные закрыты по 31.10.2026.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01552,
+   "seconds": 4.3,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-10-31\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-10-01",
+      "date_to": "2026-10-31",
+      "filters": {
+       "category": [
+        "Напитки"
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND category IN (?)\", \"params\": [\"2026-10-01\", \"2026-10-31\", \"Напитки\"], \"rows\": [{\"value\": 539157.31}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 539157.31,
+      "unit": "₽",
+      "metric_id": "revenue",
+      "explanation": "Чистая выручка (продажи минус возвраты) по категории «Напитки» за октябрь 2026. Это последний закрытый месяц: данные закрыты по 31.10.2026."
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "Q19",
+   "question": "Какая выручка сети за последний месяц, в рублях?",
+   "closed_through": "2026-09-30",
+   "expected": 4163879.16,
+   "got": 4163879.16,
+   "correct": true,
+   "explanation": "Последний закрытый месяц — сентябрь 2026 (данные закрыты по 30.09.2026). Выручка — метрика revenue, чистая: продажи минус возвраты, за 2026-09-01…2026-09-30.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01517,
+   "seconds": 4.5,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-09-01",
+      "date_to": "2026-09-30"
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ?\", \"params\": [\"2026-09-01\", \"2026-09-30\"], \"rows\": [{\"value\": 4163879.16}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 4163879.16,
+      "unit": "₽",
+      "explanation": "Последний закрытый месяц — сентябрь 2026 (данные закрыты по 30.09.2026). Выручка — метрика revenue, чистая: продажи минус возвраты, за 2026-09-01…2026-09-30.",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "Q21",
+   "question": "На сколько процентов выручка сети за последний месяц выше или ниже, чем за предыдущий? Ответ — число процентов, со знаком минус при падении.",
+   "closed_through": "2026-09-30",
+   "expected": -9.476824909841497,
+   "got": -9.4768,
+   "correct": true,
+   "explanation": "Последний закрытый месяц — сентябрь 2026 (данные закрыты по 30.09.2026), предыдущий — август. Чистая выручка за сентябрь 4 163 879,16 ₽, за август 4 599 793,54 ₽. Изменение (4163879,16 − 4599793,54) / 4599793,54 ≈ −9,4768%.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01906,
+   "seconds": 6.6,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-08-01",
+      "date_to": "2026-09-30",
+      "group_by": [
+       "month"
+      ]
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT month, sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? GROUP BY month ORDER BY month\", \"params\": [\"2026-08-01\", \"2026-09-30\"], \"rows\": [{\"month\": \"2026-08-01\", \"value\": 4599793.54}, {\"month\": \"2026-09-01\", \"value\": 4163879.16}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": -9.4768,
+      "unit": "%",
+      "metric_id": "revenue",
+      "explanation": "Последний закрытый месяц — сентябрь 2026 (данные закрыты по 30.09.2026), предыдущий — август. Чистая выручка за сентябрь 4 163 879,16 ₽, за август 4 599 793,54 ₽. Изменение (4163879,16 − 4599793,54) / 4599793,54 ≈ −9,4768%."
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "Q23",
+   "question": "Какая выручка магазинов региона «Восток» за последний месяц, в рублях?",
+   "closed_through": "2026-09-30",
+   "expected": 1065715.28,
+   "got": 1065715.28,
+   "correct": true,
+   "explanation": "Метрика revenue (чистая выручка) за сентябрь 2026 — последний закрытый месяц по closed_through 2026-09-30 — с фильтром region = «Восток».",
+   "metric_id": "revenue",
+   "cost_usd": 0.01576,
+   "seconds": 4.4,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-09-01",
+      "date_to": "2026-09-30",
+      "filters": {
+       "region": [
+        "Восток"
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND region IN (?)\", \"params\": [\"2026-09-01\", \"2026-09-30\", \"Восток\"], \"rows\": [{\"value\": 1065715.28}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 1065715.28,
+      "unit": "₽",
+      "explanation": "Метрика revenue (чистая выручка) за сентябрь 2026 — последний закрытый месяц по closed_through 2026-09-30 — с фильтром region = «Восток».",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "Q24",
+   "question": "Сколько единиц товара категории «Заморозка» продано за последний месяц?",
+   "closed_through": "2026-09-30",
+   "expected": 2675.0,
+   "got": 2675.0,
+   "correct": true,
+   "explanation": "Последний закрытый месяц — сентябрь 2026 (данные закрыты по 2026-09-30). Метрика units (чистое количество, возвраты вычтены) по категории «Заморозка» за 01.09–30.09.2026.",
+   "metric_id": "units",
+   "cost_usd": 0.01566,
+   "seconds": 4.2,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "units",
+      "date_from": "2026-09-01",
+      "date_to": "2026-09-30",
+      "filters": {
+       "category": [
+        "Заморозка"
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"units\", \"sql\": \"SELECT sum(net_qty) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND category IN (?)\", \"params\": [\"2026-09-01\", \"2026-09-30\", \"Заморозка\"], \"rows\": [{\"value\": 2675}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 2675,
+      "unit": "шт.",
+      "metric_id": "units",
+      "explanation": "Последний закрытый месяц — сентябрь 2026 (данные закрыты по 2026-09-30). Метрика units (чистое количество, возвраты вычтены) по категории «Заморозка» за 01.09–30.09.2026."
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "N1",
+   "question": "Какая выручка магазина №4 за последний месяц, в рублях?",
+   "closed_through": "2026-09-30",
+   "expected": 327090.86,
+   "got": 327090.86,
+   "correct": true,
+   "explanation": "Чистая выручка (продажи минус возвраты) магазина №4 за сентябрь 2026. Это последний закрытый месяц: данные закрыты по 2026-09-30.",
+   "metric_id": "revenue",
+   "cost_usd": 0.01566,
+   "seconds": 4.5,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-09-01",
+      "date_to": "2026-09-30",
+      "filters": {
+       "store_id": [
+        4
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND store_id IN (?)\", \"params\": [\"2026-09-01\", \"2026-09-30\", \"4\"], \"rows\": [{\"value\": 327090.86}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 327090.86,
+      "unit": "₽",
+      "explanation": "Чистая выручка (продажи минус возвраты) магазина №4 за сентябрь 2026. Это последний закрытый месяц: данные закрыты по 2026-09-30.",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "N2",
+   "question": "Сколько единиц товара на остатках сети на конец последнего месяца?",
+   "closed_through": "2026-09-30",
+   "expected": 71273.0,
+   "got": 71273.0,
+   "correct": true,
+   "explanation": "Остаток сети на конец сентября 2026 (последний закрытый месяц) по метрике stock_end_units, суммарно по всем магазинам на последнюю дату месяца.",
+   "metric_id": "stock_end_units",
+   "cost_usd": 0.0152,
+   "seconds": 4.1,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "stock_end_units",
+      "date_from": "2026-09-01",
+      "date_to": "2026-09-30"
+     },
+     "output": "{\"metric_id\": \"stock_end_units\", \"sql\": \"SELECT sum(qty_on_hand) AS value FROM mart.stock_month_end WHERE month_end BETWEEN ? AND ? AND month_end = (SELECT max(month_end) FROM mart.stock_month_end WHERE month_end BETWEEN ? AND ?)\", \"params\": [\"2026-09-01\", \"2026-09-30\", \"2026-09-01\", \"2026-09-30\"], \"rows\": [{\"value\": 71273}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 71273,
+      "unit": "шт.",
+      "explanation": "Остаток сети на конец сентября 2026 (последний закрытый месяц) по метрике stock_end_units, суммарно по всем магазинам на последнюю дату месяца.",
+      "metric_id": "stock_end_units"
+     },
+     "output": ""
+    }
+   ]
+  },
+  {
+   "setup": "gates",
+   "qid": "N3",
+   "question": "Какая выручка категории «Напитки» за последний месяц, в рублях?",
+   "closed_through": "2026-09-30",
+   "expected": 480629.51,
+   "got": 480629.51,
+   "correct": true,
+   "explanation": "Метрика revenue (чистая выручка) за сентябрь 2026 — последний закрытый месяц (данные закрыты по 2026-09-30) — с фильтром по категории «Напитки».",
+   "metric_id": "revenue",
+   "cost_usd": 0.01555,
+   "seconds": 4.7,
+   "stop": "final_answer",
+   "trace": [
+    {
+     "tool": "list_metrics",
+     "input": {},
+     "output": "{\"closed_through\": \"2026-09-30\", \"rules\": [{\"id\": \"R1\", \"text\": \"Считаем только закрытые месяцы. «Последний месяц» — последний закрытый (см. closed_through); текущий месяц неполный.\"}, {\"id\": \"R2\", \"text\": \"Выручка — чистая (продажи минус возвраты). Строки с |qty| >= 1000 — ошибка сканера, в витринах их нет.\"}, {\"id\": \"R3\", \"text\": \"Справочник товаров — mart.products, одна карточка на SKU. Не соединяйся с сырым справочником.\"}, {\"id\": \"R4\", \"text\": \"Остатки полуаддитивны — по месяцам не суммируются. Берём на конец периода (stock_end_units) или среднее из месячных (stock_avg_units).\"}, {\"id\": \""
+    },
+    {
+     "tool": "query_metric",
+     "input": {
+      "metric_id": "revenue",
+      "date_from": "2026-09-01",
+      "date_to": "2026-09-30",
+      "filters": {
+       "category": [
+        "Напитки"
+       ]
+      }
+     },
+     "output": "{\"metric_id\": \"revenue\", \"sql\": \"SELECT sum(net_amount) AS value FROM mart.sales_daily WHERE sale_date BETWEEN ? AND ? AND category IN (?)\", \"params\": [\"2026-09-01\", \"2026-09-30\", \"Напитки\"], \"rows\": [{\"value\": 480629.51}], \"truncated\": false}"
+    },
+    {
+     "tool": "final_answer",
+     "input": {
+      "value": 480629.51,
+      "unit": "₽",
+      "explanation": "Метрика revenue (чистая выручка) за сентябрь 2026 — последний закрытый месяц (данные закрыты по 2026-09-30) — с фильтром по категории «Напитки».",
+      "metric_id": "revenue"
+     },
+     "output": ""
+    }
+   ]
+  }
+ ]
+}
