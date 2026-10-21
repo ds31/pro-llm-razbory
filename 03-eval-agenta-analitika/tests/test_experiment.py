@@ -124,7 +124,7 @@ def test_cli_offline_all_and_gate(store, data_dir, tmp_path, capsys):
     assert main(["--root", str(root), "all", "--offline"]) == 0
     assert "совпадает" in capsys.readouterr().out and (root / "eval" / "out" / "report.html").exists()
     html = (root / "eval" / "out" / "report.html").read_text(encoding="utf-8")
-    assert "Три способа проверки" in html and str(tmp_path) not in html
+    assert "Живой эталон и судьи" in html and "Записанное число" in html and str(tmp_path) not in html
     assert main(["--root", str(root), "compare", "--old", "ref:base-B-1", "--new", "ref:base-B-2"]) == 0
     assert main(["--root", str(root), "compare", "--old", "ref:base-B-1", "--new", "ref:base-A-1"]) == 1
     assert main(["--root", str(root), "refs"]) == 0

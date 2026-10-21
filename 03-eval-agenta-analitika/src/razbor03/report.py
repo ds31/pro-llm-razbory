@@ -47,7 +47,7 @@ def render(summary: dict, store: dict, suite: Suite, meta: dict) -> str:
 
     ch = summary.get("checkers")
     if ch:
-        h.append("<h2 id='checkers'>Три способа проверки на одних и тех же ответах</h2>")
+        h.append("<h2 id='checkers'>Живой эталон и судьи на одних ответах</h2>")
         h.append(f"<p class='note'>{ch['live']['answers']} ответов прогона автора (A и B). Правда — живой эталон: "
                  f"check_sql по данным, допуск ±0,5 %. Настоящих ошибок: {ch['live']['errors']}.</p>")
         h.append("<div class='wrap'><table><tr><th>Проверяющий</th><th class='num'>Пропустил ошибок</th>"
@@ -71,7 +71,7 @@ def render(summary: dict, store: dict, suite: Suite, meta: dict) -> str:
         h.append("<p class='note'>Данные дозагружены по 10.11.2026: октябрь закрыт, «последний месяц» — октябрь. "
                  "reload-B — платформа обновлена; reload-stale-B — closed_through в слое метрик забыли сдвинуть.</p>")
         h.append("<div class='wrap'><table><tr><th>Прогон</th><th class='num'>Верно по живому эталону</th>"
-                 "<th>Замороженное число (10.10)</th><th>SQL с датой внутри</th></tr>")
+                 "<th>Записанное число (10.10)</th><th>SQL с датой внутри</th></tr>")
         for name, d in dr.items():
             f, s = d["frozen"], d["dated_sql"]
             h.append(f"<tr><td>{_e(name)}</td><td class='num'>{d['live_correct']} из {d['answers']}</td>"
