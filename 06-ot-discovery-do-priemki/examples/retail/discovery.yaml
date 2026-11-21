@@ -1,0 +1,143 @@
+# Discovery после недели работы: синтетическая розничная сеть из пакета 01 (12 магазинов, 200 товаров).
+# Вопросы руководства записаны дословно; к каждому — решение, метрика, источник, владелец и эталон.
+# Проверка: uv run razbor06 check examples/retail/discovery.yaml
+project: Агент-аналитик для руководства розничной сети
+as_of: 2026-10-10            # дата выгрузки данных, на которой шли интервью и профилирование
+
+stakeholders:
+  - role: Генеральный директор
+    note: задаёт вопросы M1 и M3 на ежемесячной планёрке
+  - role: Финансовый директор
+    note: владелец чисел выручки и возвратов, подписывает эталоны M1 и M3
+  - role: Руководитель закупок
+    note: задаёт вопрос M2, владелец чисел остатков
+  - role: Руководитель ИТ
+    note: владелец выгрузок из касс и учётной системы
+
+data_map:
+  - source: raw.sales
+    what: строки чеков — день, магазин, SKU, количество, сумма; возврат — строка с минусом
+    system: кассы магазинов, выгрузка каждое утро за вчера
+    owner: Руководитель ИТ
+    refresh: ежедневно
+    issues:
+      - id: anomaly
+        what: 40 строк с количеством 9999 — ошибка сканера; 8 из них — магазин №2, август 2026
+      - id: open_month
+        what: продажи по 10.10.2026; октябрь не закрыт, данные закрыты по 30.09.2026
+        only_if: relative_period
+      - id: returns
+        what: возвраты лежат в той же таблице строками с отрицательным количеством
+  - source: raw.stores
+    what: справочник магазинов — номер, регион, дата открытия
+    system: учётная система
+    owner: Руководитель ИТ
+    refresh: при открытии магазина
+  - source: raw.products
+    what: справочник товаров — SKU, категория, бренд
+    system: учётная система
+    owner: Руководитель закупок
+    refresh: ежедневно
+    issues:
+      - id: dup_cards
+        what: у 10 SKU по две карточки — соединение по SKU размножает строки продаж
+  - source: raw.stock
+    what: снимок остатков на последний день месяца — магазин, SKU, количество
+    system: учётная система
+    owner: Руководитель закупок
+    refresh: 1-го числа за прошлый месяц
+    issues:
+      - id: semi_additive
+        what: остаток — снимок на дату; по месяцам не складывается
+
+questions:
+  - id: M1
+    asked_by: Генеральный директор
+    question: Какая выручка за сентябрь по магазинам?
+    decision: каким магазинам на планёрке разбирать план, персонал и ассортимент
+    cadence: каждый месяц 10-го числа, «за прошлый месяц»
+    relative_period: true
+    metric: revenue
+    definition: чистая выручка — продажи минус возвраты, без строк-ошибок сканера
+    alternatives: [gross_sales]
+    dimensions: [store_id]
+    period: {from: 2026-09-01, to: 2026-09-30}
+    row_question: Какая выручка магазина №{key} за сентябрь 2026 года, в рублях?
+    sources: [raw.sales, raw.stores]
+    owner: Финансовый директор
+    tolerance_pct: 0.5
+    golden:
+      how: отчёт «Выручка по магазинам» учётной системы за закрытый месяц, сверен построчно
+      signed_by: Финансовый директор
+      signed_on: 2026-10-08
+      sql: >-
+        SELECT store_id, sum(amount) FROM raw.sales
+        WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+        GROUP BY store_id ORDER BY store_id
+    checks:
+      - covers: [issue:anomaly]
+        question: Какая выручка магазина №2 за август 2026 года, в рублях?
+        metric_query: {metric: revenue, date_from: 2026-08-01, date_to: 2026-08-31, filters: {store_id: [2]}}
+        golden_sql: >-
+          SELECT sum(amount) FROM raw.sales
+          WHERE abs(qty) < 1000 AND store_id = 2 AND sale_date BETWEEN '2026-08-01' AND '2026-08-31'
+      - covers: [issue:open_month]
+        question: Какая выручка магазинов региона «Восток» за последний месяц, в рублях?
+        metric_query: {metric: revenue, date_from: 2026-09-01, date_to: 2026-09-30, filters: {region: [Восток]}}
+        golden_sql: >-
+          SELECT sum(s.amount) FROM raw.sales s JOIN raw.stores st USING (store_id)
+          WHERE abs(s.qty) < 1000 AND st.region = 'Восток' AND s.sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+      - covers: [alt:gross_sales, issue:returns]
+        question: Какие валовые продажи сети (без вычета возвратов) за сентябрь 2026 года, в рублях?
+        metric_query: {metric: gross_sales, date_from: 2026-09-01, date_to: 2026-09-30}
+        golden_sql: >-
+          SELECT sum(amount) FILTER (WHERE qty > 0) FROM raw.sales
+          WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+
+  - id: M2
+    asked_by: Руководитель закупок
+    question: Сколько товара лежит в магазинах на конец квартала?
+    decision: сколько и чего дозаказывать на следующий квартал
+    cadence: раз в квартал, после закрытия квартала
+    relative_period: false
+    metric: stock_end_units
+    definition: сумма остатков всех магазинов на последний день квартала, в штуках
+    alternatives: [stock_avg_units]
+    period: {from: 2026-07-01, to: 2026-09-30}
+    sources: [raw.stock]
+    owner: Руководитель закупок
+    tolerance_pct: 0.5
+    golden:
+      how: ведомость остатков учётной системы на 30.09.2026
+      signed_by: Руководитель закупок
+      signed_on: 2026-10-07
+      question: Сколько единиц товара было на остатках сети на конец третьего квартала 2026 года?
+      sql: SELECT sum(qty_on_hand) FROM raw.stock WHERE snapshot_date = '2026-09-30'
+    checks:
+      - covers: [alt:stock_avg_units, issue:semi_additive]
+        question: Какой средний остаток сети на конец месяца в первом полугодии 2026 года, в штуках?
+        metric_query: {metric: stock_avg_units, date_from: 2026-01-01, date_to: 2026-06-30}
+        golden_sql: SELECT sum(qty_on_hand) / 6.0 FROM raw.stock WHERE snapshot_date BETWEEN '2026-01-01' AND '2026-06-30'
+
+  - id: M3
+    asked_by: Генеральный директор
+    question: Какая доля возвратов за квартал?
+    decision: нужен ли разбор качества товара и работы с возвратами
+    cadence: раз в квартал
+    relative_period: false
+    metric: returns_amount / gross_sales
+    scale: 100
+    definition: возвраты в рублях ÷ валовые продажи (до вычета возвратов) × 100 %, без строк-ошибок
+    period: {from: 2026-07-01, to: 2026-09-30}
+    sources: [raw.sales]
+    owner: Финансовый директор
+    tolerance_pct: 0.5
+    golden:
+      how: отчёт о возвратах учётной системы за третий квартал, сверен с финансовым директором
+      signed_by: Финансовый директор
+      signed_on: 2026-10-08
+      question: Какую долю валовых продаж составили возвраты в третьем квартале 2026 года, в процентах?
+      sql: >-
+        SELECT 100.0 * -sum(amount) FILTER (WHERE qty < 0) / sum(amount) FILTER (WHERE qty > 0)
+        FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-07-01' AND '2026-09-30'
+      covers: [issue:returns, issue:anomaly]

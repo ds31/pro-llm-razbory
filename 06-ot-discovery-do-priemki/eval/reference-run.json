@@ -1,0 +1,388 @@
+{
+  "meta": {
+    "дата прогона": "2026-11-22 02:23",
+    "ответы агента": "пакет 01, eval/reference-run.json: anthropic/claude-sonnet-5.5, 2026-10-19 21:41",
+    "пороги": {
+      "tolerance_pct": 0.5,
+      "every_case_answered": true,
+      "max_cost_usd": 0.05,
+      "max_seconds": 15
+    }
+  },
+  "discovery": {
+    "day1": {
+      "questions": 3,
+      "ready": false,
+      "gaps": 24,
+      "by_where": {
+        "data_map:raw.sales": [
+          "owner",
+          "refresh"
+        ],
+        "data_map:raw.stock": [
+          "owner",
+          "refresh"
+        ],
+        "M1": [
+          "decision",
+          "definition",
+          "period",
+          "owner",
+          "golden",
+          "metric"
+        ],
+        "M2": [
+          "decision",
+          "metric",
+          "definition",
+          "period",
+          "owner",
+          "golden",
+          "asked_by"
+        ],
+        "M3": [
+          "decision",
+          "metric",
+          "definition",
+          "period",
+          "sources",
+          "owner",
+          "golden"
+        ]
+      },
+      "untouched_issues": []
+    },
+    "filled": {
+      "questions": 3,
+      "ready": true,
+      "gaps": 0,
+      "by_where": {},
+      "untouched_issues": [
+        "raw.products: dup_cards"
+      ]
+    }
+  },
+  "acceptance": {
+    "cases": 7,
+    "by_question": {
+      "M1": 4,
+      "M2": 2,
+      "M3": 1
+    },
+    "table_rows": 12,
+    "todo": 0
+  },
+  "variants": {
+    "A": {
+      "verdict": "не принят",
+      "gates": {
+        "G1": {
+          "status": "пройдены",
+          "detail": ""
+        },
+        "G2": {
+          "status": "пройдены",
+          "detail": ""
+        },
+        "G3": {
+          "status": "не применимо",
+          "detail": "у прототипа нет слоя метрик: числа проверяются только через ответы агента"
+        },
+        "G4": {
+          "status": "не пройдены",
+          "detail": "ошибки агента: M1-2, M1-3, M3-1"
+        },
+        "G5": {
+          "status": "пройдены",
+          "detail": "$0.0185 и 8.0 с на ответ"
+        }
+      },
+      "answered": 6,
+      "correct": 3,
+      "waiting": 12,
+      "failed": [
+        "M1-2",
+        "M1-3",
+        "M3-1"
+      ],
+      "cost_usd_mean": 0.0185,
+      "seconds_mean": 8.0,
+      "cases": [
+        {
+          "id": "M1-1",
+          "covers": [
+            "base"
+          ],
+          "question": "Какая выручка за сентябрь по магазинам?",
+          "status": "ждёт прогона",
+          "expected": {
+            "1": 370561.42,
+            "2": 335621.68,
+            "3": 347448.05,
+            "4": 327090.86,
+            "5": 340382.58,
+            "6": 357497.43,
+            "7": 329457.98,
+            "8": 342965.24,
+            "9": 337427.75,
+            "10": 351896.22,
+            "11": 327870.77,
+            "12": 395659.18
+          },
+          "layer": null,
+          "layer_ok": null,
+          "answer": null,
+          "rows": "0/0/12"
+        },
+        {
+          "id": "M1-2",
+          "covers": [
+            "issue:anomaly"
+          ],
+          "question": "Какая выручка магазина №2 за август 2026 года, в рублях?",
+          "status": "ошибка",
+          "expected": 358641.27,
+          "layer": null,
+          "layer_ok": null,
+          "answer": 19908486.09,
+          "rows": null
+        },
+        {
+          "id": "M1-3",
+          "covers": [
+            "issue:open_month"
+          ],
+          "question": "Какая выручка магазинов региона «Восток» за последний месяц, в рублях?",
+          "status": "ошибка",
+          "expected": 1065715.28,
+          "layer": null,
+          "layer_ok": null,
+          "answer": 392589.91,
+          "rows": null
+        },
+        {
+          "id": "M1-4",
+          "covers": [
+            "alt:gross_sales",
+            "issue:returns"
+          ],
+          "question": "Какие валовые продажи сети (без вычета возвратов) за сентябрь 2026 года, в рублях?",
+          "status": "верно",
+          "expected": 4217936.71,
+          "layer": null,
+          "layer_ok": null,
+          "answer": 4217936.71,
+          "rows": null
+        },
+        {
+          "id": "M2-1",
+          "covers": [
+            "base"
+          ],
+          "question": "Сколько единиц товара было на остатках сети на конец третьего квартала 2026 года?",
+          "status": "верно",
+          "expected": 71273.0,
+          "layer": null,
+          "layer_ok": null,
+          "answer": 71273.0,
+          "rows": null
+        },
+        {
+          "id": "M2-2",
+          "covers": [
+            "alt:stock_avg_units",
+            "issue:semi_additive"
+          ],
+          "question": "Какой средний остаток сети на конец месяца в первом полугодии 2026 года, в штуках?",
+          "status": "верно",
+          "expected": 72228.0,
+          "layer": null,
+          "layer_ok": null,
+          "answer": 72228.0,
+          "rows": null
+        },
+        {
+          "id": "M3-1",
+          "covers": [
+            "base",
+            "issue:returns",
+            "issue:anomaly"
+          ],
+          "question": "Какую долю валовых продаж составили возвраты в третьем квартале 2026 года, в процентах?",
+          "status": "ошибка",
+          "expected": 1.1746,
+          "layer": null,
+          "layer_ok": null,
+          "answer": 0.4845,
+          "rows": null
+        }
+      ]
+    },
+    "B": {
+      "verdict": "ждёт прогона",
+      "gates": {
+        "G1": {
+          "status": "пройдены",
+          "detail": ""
+        },
+        "G2": {
+          "status": "пройдены",
+          "detail": ""
+        },
+        "G3": {
+          "status": "пройдены",
+          "detail": ""
+        },
+        "G4": {
+          "status": "ждёт прогона",
+          "detail": "нет ответа агента: 12 из 18"
+        },
+        "G5": {
+          "status": "пройдены",
+          "detail": "$0.0158 и 4.8 с на ответ"
+        }
+      },
+      "answered": 6,
+      "correct": 6,
+      "waiting": 12,
+      "failed": [],
+      "cost_usd_mean": 0.0158,
+      "seconds_mean": 4.8,
+      "cases": [
+        {
+          "id": "M1-1",
+          "covers": [
+            "base"
+          ],
+          "question": "Какая выручка за сентябрь по магазинам?",
+          "status": "ждёт прогона",
+          "expected": {
+            "1": 370561.42,
+            "2": 335621.68,
+            "3": 347448.05,
+            "4": 327090.86,
+            "5": 340382.58,
+            "6": 357497.43,
+            "7": 329457.98,
+            "8": 342965.24,
+            "9": 337427.75,
+            "10": 351896.22,
+            "11": 327870.77,
+            "12": 395659.18
+          },
+          "layer": {
+            "1": 370561.42,
+            "2": 335621.68,
+            "3": 347448.05,
+            "4": 327090.86,
+            "5": 340382.58,
+            "6": 357497.43,
+            "7": 329457.98,
+            "8": 342965.24,
+            "9": 337427.75,
+            "10": 351896.22,
+            "11": 327870.77,
+            "12": 395659.18
+          },
+          "layer_ok": true,
+          "answer": null,
+          "rows": "0/0/12"
+        },
+        {
+          "id": "M1-2",
+          "covers": [
+            "issue:anomaly"
+          ],
+          "question": "Какая выручка магазина №2 за август 2026 года, в рублях?",
+          "status": "верно",
+          "expected": 358641.27,
+          "layer": 358641.27,
+          "layer_ok": true,
+          "answer": 358641.27,
+          "rows": null
+        },
+        {
+          "id": "M1-3",
+          "covers": [
+            "issue:open_month"
+          ],
+          "question": "Какая выручка магазинов региона «Восток» за последний месяц, в рублях?",
+          "status": "верно",
+          "expected": 1065715.28,
+          "layer": 1065715.28,
+          "layer_ok": true,
+          "answer": 1065715.28,
+          "rows": null
+        },
+        {
+          "id": "M1-4",
+          "covers": [
+            "alt:gross_sales",
+            "issue:returns"
+          ],
+          "question": "Какие валовые продажи сети (без вычета возвратов) за сентябрь 2026 года, в рублях?",
+          "status": "верно",
+          "expected": 4217936.71,
+          "layer": 4217936.71,
+          "layer_ok": true,
+          "answer": 4217936.71,
+          "rows": null
+        },
+        {
+          "id": "M2-1",
+          "covers": [
+            "base"
+          ],
+          "question": "Сколько единиц товара было на остатках сети на конец третьего квартала 2026 года?",
+          "status": "верно",
+          "expected": 71273.0,
+          "layer": 71273.0,
+          "layer_ok": true,
+          "answer": 71273.0,
+          "rows": null
+        },
+        {
+          "id": "M2-2",
+          "covers": [
+            "alt:stock_avg_units",
+            "issue:semi_additive"
+          ],
+          "question": "Какой средний остаток сети на конец месяца в первом полугодии 2026 года, в штуках?",
+          "status": "верно",
+          "expected": 72228.0,
+          "layer": 72228.0,
+          "layer_ok": true,
+          "answer": 72228.0,
+          "rows": null
+        },
+        {
+          "id": "M3-1",
+          "covers": [
+            "base",
+            "issue:returns",
+            "issue:anomaly"
+          ],
+          "question": "Какую долю валовых продаж составили возвраты в третьем квартале 2026 года, в процентах?",
+          "status": "верно",
+          "expected": 1.1746,
+          "layer": 1.1746,
+          "layer_ok": true,
+          "answer": 1.1746,
+          "rows": null
+        }
+      ]
+    }
+  },
+  "profile": {
+    "scanner_error_rows": 40,
+    "scanner_error_rows_2026": {
+      "2026-08": 8
+    },
+    "last_sale_date": "2026-10-10",
+    "september_by_store_without_rules_equals_golden": true,
+    "august_store2_without_rules": 19908486.09,
+    "august_store2_golden": 358641.27,
+    "q3_returns_share_without_rules": 0.4845,
+    "east_october_1_10": 392589.91
+  }
+}

@@ -1,0 +1,31 @@
+# Discovery после первой встречи: вопросы записаны, остальное — пусто.
+# Так выглядит файл, с которым обычно уходят делать прототип. Проверка покажет, чего не хватает:
+# uv run razbor06 check examples/retail/discovery-day1.yaml
+project: Агент-аналитик для руководства розничной сети
+as_of: 2026-10-01
+
+stakeholders:
+  - role: Генеральный директор
+    note: заказчик, задаёт вопросы
+
+data_map:
+  - source: raw.sales
+    what: продажи из касс
+  - source: raw.stock
+    what: остатки
+
+questions:
+  - id: M1
+    asked_by: Генеральный директор
+    question: Какая выручка за сентябрь по магазинам?
+    metric: выручка
+    sources: [raw.sales]
+
+  - id: M2
+    asked_by: Руководитель закупок
+    question: Сколько товара лежит в магазинах на конец квартала?
+    sources: [raw.stock]
+
+  - id: M3
+    asked_by: Генеральный директор
+    question: Какая доля возвратов за квартал?

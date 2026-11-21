@@ -1,0 +1,115 @@
+# Кейсы приёмки — вывод `razbor06 scaffold`. Не править руками: правится discovery, каркас пересобирается.
+# kind: scalar — одно число; table — число на каждое значение измерения (row_question — вопрос по строке).
+# todo — чего не хватает, чтобы кейс можно было проверить.
+project: Агент-аналитик для руководства розничной сети
+cases:
+- id: M1-1
+  from_q: M1
+  covers:
+  - base
+  kind: table
+  question: Какая выручка за сентябрь по магазинам?
+  metric_query:
+    metric: revenue
+    date_from: '2026-09-01'
+    date_to: '2026-09-30'
+    group_by:
+    - store_id
+  golden_sql: SELECT store_id, sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-09-01'
+    AND '2026-09-30' GROUP BY store_id ORDER BY store_id
+  signed_by: Финансовый директор
+  tolerance_pct: 0.5
+  row_question: Какая выручка магазина №{key} за сентябрь 2026 года, в рублях?
+- id: M1-2
+  from_q: M1
+  covers:
+  - issue:anomaly
+  kind: scalar
+  question: Какая выручка магазина №2 за август 2026 года, в рублях?
+  metric_query:
+    metric: revenue
+    date_from: '2026-08-01'
+    date_to: '2026-08-31'
+    filters:
+      store_id:
+      - 2
+  golden_sql: SELECT sum(amount) FROM raw.sales WHERE abs(qty) < 1000 AND store_id = 2 AND sale_date BETWEEN '2026-08-01'
+    AND '2026-08-31'
+  signed_by: Финансовый директор
+  tolerance_pct: 0.5
+- id: M1-3
+  from_q: M1
+  covers:
+  - issue:open_month
+  kind: scalar
+  question: Какая выручка магазинов региона «Восток» за последний месяц, в рублях?
+  metric_query:
+    metric: revenue
+    date_from: '2026-09-01'
+    date_to: '2026-09-30'
+    filters:
+      region:
+      - Восток
+  golden_sql: SELECT sum(s.amount) FROM raw.sales s JOIN raw.stores st USING (store_id) WHERE abs(s.qty) < 1000
+    AND st.region = 'Восток' AND s.sale_date BETWEEN '2026-09-01' AND '2026-09-30'
+  signed_by: Финансовый директор
+  tolerance_pct: 0.5
+- id: M1-4
+  from_q: M1
+  covers:
+  - alt:gross_sales
+  - issue:returns
+  kind: scalar
+  question: Какие валовые продажи сети (без вычета возвратов) за сентябрь 2026 года, в рублях?
+  metric_query:
+    metric: gross_sales
+    date_from: '2026-09-01'
+    date_to: '2026-09-30'
+  golden_sql: SELECT sum(amount) FILTER (WHERE qty > 0) FROM raw.sales WHERE abs(qty) < 1000 AND sale_date BETWEEN
+    '2026-09-01' AND '2026-09-30'
+  signed_by: Финансовый директор
+  tolerance_pct: 0.5
+- id: M2-1
+  from_q: M2
+  covers:
+  - base
+  kind: scalar
+  question: Сколько единиц товара было на остатках сети на конец третьего квартала 2026 года?
+  metric_query:
+    metric: stock_end_units
+    date_from: '2026-07-01'
+    date_to: '2026-09-30'
+  golden_sql: SELECT sum(qty_on_hand) FROM raw.stock WHERE snapshot_date = '2026-09-30'
+  signed_by: Руководитель закупок
+  tolerance_pct: 0.5
+- id: M2-2
+  from_q: M2
+  covers:
+  - alt:stock_avg_units
+  - issue:semi_additive
+  kind: scalar
+  question: Какой средний остаток сети на конец месяца в первом полугодии 2026 года, в штуках?
+  metric_query:
+    metric: stock_avg_units
+    date_from: '2026-01-01'
+    date_to: '2026-06-30'
+  golden_sql: SELECT sum(qty_on_hand) / 6.0 FROM raw.stock WHERE snapshot_date BETWEEN '2026-01-01' AND '2026-06-30'
+  signed_by: Руководитель закупок
+  tolerance_pct: 0.5
+- id: M3-1
+  from_q: M3
+  covers:
+  - base
+  - issue:returns
+  - issue:anomaly
+  kind: scalar
+  question: Какую долю валовых продаж составили возвраты в третьем квартале 2026 года, в процентах?
+  metric_query:
+    metric: returns_amount / gross_sales
+    date_from: '2026-07-01'
+    date_to: '2026-09-30'
+    scale: 100
+  golden_sql: SELECT 100.0 * -sum(amount) FILTER (WHERE qty < 0) / sum(amount) FILTER (WHERE qty > 0) FROM raw.sales
+    WHERE abs(qty) < 1000 AND sale_date BETWEEN '2026-07-01' AND '2026-09-30'
+  signed_by: Финансовый директор
+  tolerance_pct: 0.5
