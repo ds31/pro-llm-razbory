@@ -1,0 +1,49 @@
+# Стек разбора 08: Postgres (витрины + служебная база Metabase) и Metabase.
+# Шаблон для одного сервера без команды данных. Загрузчик (uv run razbor08 …) запускается
+# по расписанию на хосте или в отдельном контейнере и публикует витрины в схему mart базы dwh.
+#
+#   cp deploy/env.example deploy/.env       # поменять пароли
+#   docker compose -f deploy/docker-compose.yml up -d
+#   Metabase — http://localhost:3030, Postgres — localhost:5452
+name: razbor08
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: razbor08
+      POSTGRES_PASSWORD: ${PG_PASSWORD:-razbor08}
+      POSTGRES_DB: dwh
+      MB_READER_PASSWORD: ${MB_READER_PASSWORD:-reader}
+    ports:
+      - "127.0.0.1:${PG_PORT:-5452}:5432"     # наружу не открываем: только локальный хост
+    volumes:
+      - pg:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U razbor08 -d dwh"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  metabase:
+    image: metabase/metabase:v0.64.8.3         # LTS-ветка; версию фиксируем, обновляем осознанно
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      MB_DB_TYPE: postgres                     # служебная база Metabase — не встроенная H2
+      MB_DB_HOST: postgres
+      MB_DB_PORT: 5432
+      MB_DB_DBNAME: metabase
+      MB_DB_USER: razbor08
+      MB_DB_PASS: ${PG_PASSWORD:-razbor08}
+      MB_SITE_LOCALE: ru
+      JAVA_OPTS: "-Xmx1g"
+    ports:
+      - "127.0.0.1:${MB_PORT:-3030}:3000"
+
+volumes:
+  pg:
