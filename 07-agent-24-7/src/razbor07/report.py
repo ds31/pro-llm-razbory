@@ -52,7 +52,7 @@ def _main_table(main: dict) -> str:
     rows = [
         ("Доставлено ответов", lambda m: _n(m["delivered"]), None),
         ("Потеряно: ответа нет и в dead-letter нет", lambda m: _n(m["lost"]), lambda m: m["lost"] == 0),
-        ("Дубли: магазин получил ответ дважды", lambda m: _n(m["dup_tasks"]), lambda m: m["dup_tasks"] == 0),
+        ("Дубли: ответ на вопрос пришёл дважды и больше", lambda m: _n(m["dup_tasks"]), lambda m: m["dup_tasks"] == 0),
         ("В dead-letter, с причиной", lambda m: _n(m["dead"]), None),
         ("p50 до ответа", lambda m: _sec(m["p50"]), None),
         ("p95 до ответа", lambda m: _sec(m["p95"]), None),
@@ -125,9 +125,11 @@ def _trace_table(events: list[dict], t0: float) -> str:
         if e.get("delay_s") is not None:
             detail.append(f"через {_n(e['delay_s'], 1)} с")
         who = e.get("exec") or ""
-        body += (f"<tr><td class='num'>+{_n(e['t'] - t0, 1)} с</td><td class='ev'>{escape(who)}</td>"
+        att = e.get("attempt")
+        body += (f"<tr><td class='num'>+{_n(e['t'] - t0, 1)} с</td><td class='num'>{att if att is not None else ''}</td>"
+                 f"<td class='ev'>{escape(who)}</td>"
                  f"<td class='{cls}'>{escape(what)}</td><td class='ev mute'>{escape(' · '.join(detail))}</td></tr>")
-    return ("<div class='wrap'><table><tr><th class='num'>время</th><th>попытка</th><th>событие</th><th>детали</th></tr>"
+    return ("<div class='wrap'><table><tr><th class='num'>время</th><th class='num'>попытка</th><th>воркер</th><th>событие</th><th>детали</th></tr>"
             f"{body}</table></div>")
 
 
@@ -146,7 +148,7 @@ def render_report(ref: dict) -> str:
     cards = [
         (_n(night["tasks"]), f"вопросов магазинов за {_n(night['hours'])} ч, из них "
                              f"{_n(night['peak_share'] * 100)} % — в утренний пик за {_n(night['peak_len'] / 60)} мин"),
-        (f"{_n(f['rpm_limit'])} в минуту", "лимит запросов к модели на ключ; сверх — 429 с retry-after"),
+        (f"{_n(f['rpm_limit'])} в минуту", "лимит запросов к модели на аккаунт; сверх — 429 с retry-after"),
         (f"{_n(f['p_overload'] * 100, 1)} · {_n(f['p_hang'] * 100, 1)} · {_n(f['p_drop'] * 100, 1)} %",
          "вызовов: перегрузка 529 · зависание · обрыв посреди ответа"),
         (f"раз в {_n(night['crash_every'] / 60)} мин", "kill -9 процесса с агентом, в среднем; подъём за "
