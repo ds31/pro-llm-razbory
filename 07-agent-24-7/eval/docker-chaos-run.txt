@@ -1,0 +1,24 @@
+# deploy/chaos.sh на машине автора: TIME_SCALE=0.02, CHAOS_KILL_P=0.1, N=100, 2 воркера; вывод сборки образа опущен
+2026-11-22 14:16
+Docker Compose version v5.6.1
+{"tasks": 100, "resent_with_same_key": 12}
+{
+ "counts": {
+  "done": 100
+ },
+ "dead_letter": [],
+ "mail_sent": 100,
+ "tasks_with_mail": 100,
+ "duplicate_mail": 0,
+ "max_attempts_seen": 3
+}
+Перезапуски контейнеров воркеров:
+/razbor07-worker-1 restarts=8
+/razbor07-worker-2 restarts=9
+Последние события трассы:
+{"t": 1795328225.647, "event": "lease_expired", "task": "live/store-15/q-0069", "task_id": 69, "exec": "fcd8dc1e8273#da678d.7"}
+{"t": 1795328225.833, "event": "send_deduped", "task": "live/store-15/q-0069", "exec": "d78deb3f5d69#378e8d.1", "attempt": 2}
+{"t": 1795328232.922, "event": "lease_expired", "task": "live/store-54/q-0072", "task_id": 72, "exec": "fcd8dc1e8273#b6d5e2.3"}
+{"t": 1795328233.002, "event": "send_deduped", "task": "live/store-54/q-0072", "exec": "d78deb3f5d69#205058.1", "attempt": 2}
+{"t": 1795328251.293, "event": "lease_expired", "task": "live/store-58/q-0098", "task_id": 98, "exec": "fcd8dc1e8273#1e48e7.8"}
+{"t": 1795328251.418, "event": "send_deduped", "task": "live/store-58/q-0098", "exec": "d78deb3f5d69#75bfef.1", "attempt": 2}
