@@ -43,11 +43,11 @@ def main_scheme():
     s.mono(478, 56, 'воскресенье: контрольные суммы магазин × месяц, расхождения — перевыгрузить', 10.5, INK2, 'middle')
     # потребители
     pg = s.box(600, 232, 150, 76, 'Postgres', 'схема mart', sub2='только чтение')
-    s.arrow(raw.at('b', 0.3), pg.r, None, via=[(835, 270)])
+    s.arrow((800, 184), pg.t, None, via=[(800, 208), (675, 208)])
     mb = s.box(412, 232, 150, 76, 'Metabase', 'дашборды', sub2='руководителю', accent=True)
     s.arrow(pg.l, mb.r, None, accent=True)
     gate = s.box(788, 232, 156, 76, 'Ворота', 'closed_through', sub2='разбор 05')
-    s.arrow(raw.at('b', 0.7), gate.t)
+    s.arrow((866, 184), gate.t)
     ml = s.box(788, 338, 156, 76, 'Слой метрик', 'metrics.yaml', sub2='разбор 01')
     s.arrow(gate.b, ml.t)
     ag = s.box(600, 338, 150, 76, 'Агент', 'вопрос текстом →', sub2='цифра + метрика', accent=True)

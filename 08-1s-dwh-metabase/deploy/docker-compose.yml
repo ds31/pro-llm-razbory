@@ -28,7 +28,7 @@ services:
       retries: 20
 
   metabase:
-    image: metabase/metabase:v0.64.8.3         # LTS-ветка; версию фиксируем, обновляем осознанно
+    image: metabase/metabase:v0.64.8.3         # версию фиксируем, обновляем осознанно
     restart: unless-stopped
     depends_on:
       postgres:
