@@ -1,0 +1,67 @@
+# Шаблон деплоя агента 24/7: API → очередь → воркеры агента.
+# Запуск из корня пакета: docker compose -f deploy/docker-compose.yml up -d --build
+# Короткий хаос-сценарий: deploy/chaos.sh (100 задач, воркеры убивают себя kill -9 после письма).
+#
+# Очередь — SQLite в общем томе: одна машина, несколько процессов. Несколько машин — та же схема
+# на Postgres (SELECT … FOR UPDATE SKIP LOCKED), код воркера не меняется.
+
+x-agent: &agent
+  build:
+    context: ..
+    dockerfile: deploy/Dockerfile
+  image: razbor07-agent
+  init: true                      # tini — PID 1: пересылает SIGTERM, собирает зомби
+  restart: unless-stopped         # упал (OOM, kill -9) — поднимется сам
+  volumes:
+    - queue:/data
+  environment:
+    QUEUE_DB: /data/queue.db
+    TIME_SCALE: ${TIME_SCALE:-1}  # 1 — реальное время; 0.02 — минута за 1,2 с (демо и хаос-тест)
+    TRACE_FILE: ""                # трасса — в stdout: docker compose logs, дальше — в сборщик логов
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "5" }   # журнал не съест диск за месяц работы
+
+services:
+  api:
+    <<: *agent
+    command: ["api", "--port", "8080"]
+    ports:
+      - "127.0.0.1:${API_PORT:-8080}:8080"   # наружу — через reverse proxy с TLS, не напрямую
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8080/healthz', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  worker:
+    <<: *agent
+    command: ["worker"]
+    depends_on:
+      api:
+        condition: service_healthy   # API создал схему очереди
+    deploy:
+      replicas: 2                    # число воркеров — под лимит запросов к модели, не под нагрузку
+      resources:
+        limits: { memory: 512m }
+    stop_grace_period: 120s          # SIGTERM: доделать текущую задачу, потом выйти
+    environment:
+      QUEUE_DB: /data/queue.db
+      TIME_SCALE: ${TIME_SCALE:-1}
+      TRACE_FILE: ""
+      ALIVE_FILE: /tmp/worker.alive
+      CHAOS_KILL_P: ${CHAOS_KILL_P:-0}        # хаос-тест: доля задач, после письма которых воркер kill -9
+      FAULT_RPM_LIMIT: ${FAULT_RPM_LIMIT:-50} # профиль фейковой модели; в проде — настоящий SDK
+      FAULT_P_DROP: ${FAULT_P_DROP:-0.01}
+      FAULT_P_HANG: ${FAULT_P_HANG:-0.005}
+      # ANTHROPIC_API_KEY: из секретов окружения, не из файла в репозитории
+    healthcheck:
+      test: ["CMD", "python", "-m", "razbor07", "health", "--file", "/tmp/worker.alive", "--max-age", "60"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  queue: {}
